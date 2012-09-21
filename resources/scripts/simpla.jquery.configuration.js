@@ -33,7 +33,7 @@ $(document).ready(function(){
 
     //Minimize Content Box
 		
-		$(".content-box-header h3").css({ "cursor":"s-resize" }); // Give the h3 in Content Box Header a different cursor
+		$(".content-box-header h3").css({ "cursor":"pointer" }); // Give the h3 in Content Box Header a different cursor
 		$(".closed-box .content-box-content").hide(); // Hide the content of the header if it has the class "closed"
 		$(".closed-box .content-box-tabs").hide(); // Hide the tabs in the header if it has the class "closed"
 		

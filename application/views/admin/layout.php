@@ -66,11 +66,10 @@ $(function(){
           <!-- Add the class "current" to current menu item -->
           文章 </a>
           <ul>
-            <li><a class="current" href="feadmin/">管理文章</a></li>
+            <li><a <?php if($this->uri->segment(2) == 'postsList'|| $this->uri->segment(2) == 'postsSearch' || $this->uri->segment(2) == 'posts'){echo 'class="current"';}?> href="feadmin/postsList">管理文章</a></li>
             <!-- Add class "current" to sub menu items also -->
-            <li><a href="feadmin/post">管理列表</a></li>
             <!-- <li><a href="feadmin/category">添加导航</a></li> -->
-			<li><a href="feadmin/categoryList">导航列表</a></li>
+			<li><a <?php if($this->uri->segment(2) == 'categoryList' || $this->uri->segment(2) == 'category'){echo 'class="current"';}?> href="feadmin/categoryList">导航列表</a></li>
 			<li><a href="feadmin/form">表单</a></li>
           </ul>
         </li>

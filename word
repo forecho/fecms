@@ -1,0 +1,18 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="6">
+            <File firstVisibleLine="76" xOffset="0" scrollWidth="1443" startPos="3202" endPos="3202" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\controllers\feadmin.php">
+                <Mark line="164" />
+                <Mark line="204" />
+                <Mark line="210" />
+            </File>
+            <File firstVisibleLine="29" xOffset="0" scrollWidth="1080" startPos="3208" endPos="3208" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\models\fe_model.php" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1588" startPos="918" endPos="918" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\postsView.php" />
+            <File firstVisibleLine="42" xOffset="0" scrollWidth="1523" startPos="97" endPos="97" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\posts.php" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1584" startPos="489" endPos="489" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\category.php" />
+            <File firstVisibleLine="25" xOffset="0" scrollWidth="1584" startPos="1618" endPos="1618" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\categoryList.php" />
+            <File firstVisibleLine="84" xOffset="0" scrollWidth="1278" startPos="2146" endPos="1976" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\layout.php" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

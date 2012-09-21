@@ -13,67 +13,101 @@
 	<div class="content-box-content">
 		<div class="tab-content default-tab" id="tab1">
 			<!-- This is the target div. id must match the href of this div's tab -->
-			<div class="notification attention png_bg"> 
-				<a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div> 这是一个内容框.你可以放置你想要的任何东西，当然，你可以关闭这个通知拥有上方的叉叉 </div>
+			
+			<div class="bulk-actions search">
+				<form action="feadmin/postsSearch/">
+					<select name="category">
+						<option value="0">全部分类</option>
+						<?php foreach($category as $row):?>
+						<option value="<?php echo $row->cid;?>" <?php if(@$_GET['category'] == $row->cid){echo 'selected="selected"';}?>>
+							<?php
+								$count = count(explode('-',$row->bpath));
+								for($i=1;$i<$count;$i++){
+										echo '&nbsp;&nbsp;&nbsp;&nbsp;';
+									}	
+									echo '|-',$row->name;
+								?>
+						</option>
+						<?php endforeach;?>
+					</select>
+					<input type="text" name="title" value="<?php echo @$_GET['title'];?>" />
+					<input type="submit" value="搜索"  class="button"/>
+				</form>
 			</div>
-			<table>
-				<thead>
-					<tr>
-						<th>
-						  <input class="check-all" type="checkbox" />
-						</th>
-						<th>文章标题</th>
-						<th>分类</th>
-						<th>发布时间</th>
-						<th>操  作</th>
-					</tr>
-				</thead>
-				<tfoot>
-					<tr>
-						<td colspan="6">
-							<div class="bulk-actions align-left">
-								<select name="dropdown">
-									<option value="option1">选择一个开始···</option>
-									<option value="option3">删除</option>
-								</select>
-								<a class="button" href="#">选中项目操作</a>
-							</div>
-							<div class="pagination">
-								<?php echo $this->pagination->create_links(); ?>
-							</div>
-								<!-- End .pagination -->
-							<div class="clear"></div>
-						</td>
-					</tr>
-				</tfoot>
-				<tbody>
-					<?php foreach ($posts['admin'] as $post):?>
-					<tr>
-						<td>
-						  <input type="checkbox" />
-						</td>
-						<td><?php echo $post->title;?></td>
-						<td><a href="#" title="title"><?php echo $categoryOne->category;?></a></td>
-						<td><?php echo $post->addtime;?></td>
-						<td>
-							<a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a> 
-							<a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-							<!-- <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a> -->
-						</td>
-					</tr>
-				  <?php endforeach;?>
-				</tbody>
-		  </table>
+			
+			<!-- <div class="notification attention png_bg"> 
+				<a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+				<div>
+				<?php if(@$categoryOne):?>
+					<?php echo $categoryOne->name;?> 分类下所有的文章
+				<?php else:?>
+					全部分类文章
+				<?php endif;?> 
+				</div>
+			</div> -->
+			<form method="post" action="feadmin/postsDeletes">
+				<table>
+					<thead>
+						<tr>
+							<th>
+							  <input class="check-all" type="checkbox" />
+							</th>
+							<th>文章标题</th>
+							<th>分类</th>
+							<th>发布时间</th>
+							<th>操  作</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<td colspan="6">
+								<div class="bulk-actions align-left">
+									<!-- <select name="dropdown">
+										<option value="option1">选择一个开始···</option>
+										<option value="option3">删除</option>
+									</select> -->
+									<input type="submit" value="删除选中项目"  class="button"/>
+								</div>
+								<div class="pagination">
+									<?php echo $this->pagination->create_links(); ?>
+								</div>
+									<!-- End .pagination -->
+								<div class="clear"></div>
+							</td>
+						</tr>
+					</tfoot>
+					<tbody>
+						<?php foreach ($posts['admin'] as $post):
+							?>
+						<tr>
+							<td>
+							  <input type="checkbox" name="checkbox[]" value="<?php echo $post->id; ?>" />
+							</td>
+							<td><a href="feadmin/posts/<?php echo $post->id;?>" title="修改文章"><?php echo $post->title;?></a></td>
+							<td><a href="feadmin/postsSearch/?category=<?php echo $post->category;?>" title="查询“<?php echo $post->name;?>”分类"><?php echo $post->name;?></a></td>
+							<td><?php echo $post->addtime;?></td>
+							<td>
+								<a href="feadmin/posts/<?php echo $post->id;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
+								<?php if($post->type != 1){?>
+									<a href="feadmin/postsDelete/<?php echo $post->id;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
+									<!-- <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a> -->
+								<?php }?>
+							</td>
+						</tr>
+					  <?php 
+					  endforeach;?>
+					</tbody>
+			  </table>
+		  </form>
 		</div>
 	<!-- End #tab1 -->
 	<div class="tab-content" id="tab2">
-	  <form action="feadmin/postsCreate" method="post" class="registerform" onSubmit="return chkinput(this)">
+	  <form action="feadmin/postsCreate" method="post" class="registerform" onSubmit="return chkinput(this)" enctype="multipart/form-data">
 		<fieldset>
 		<!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
 		<p>
 			<label><span class="need">* </span>标题</label>
-				<input class="text-input small-input" type="text" id="small-input" name="title" datatype="s4-18" errormsg="昵称至少4个字符,最多18个字符！" />
+				<input class="text-input small-input" type="text" id="small-input" name="title" datatype="*4-18" errormsg="昵称至少4个字符,最多18个字符！" />
 				<span class="Validform_checktip"></span>
 			<!-- Classes for input-notification: success, error, information, attention -->
 		  <br />
@@ -82,7 +116,7 @@
 			<label><span class="need">* </span>分类</label>
 			<select name="category" class="small-input">
 				<?php foreach($category as $row):?>
-				<option value="<?php echo $row->id;?>">
+				<option value="<?php echo $row->cid;?>">
 					<?php
 						$count = count(explode('-',$row->bpath));
 						for($i=1;$i<$count;$i++){
@@ -93,6 +127,10 @@
 				</option>
 				<?php endforeach;?>
 			</select>
+		</p>
+		<p>
+			<label>标题图(177*120)</label>
+			<input type="file" class="text-input small-input" id="small-input" name="image"/>
 		</p>
 		  <!-- <label>复选框</label>
 		  <input type="checkbox" name="checkbox1" />

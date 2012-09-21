@@ -792,3 +792,19 @@ div.wysiwyg ul.panel li a.removeFormat { background-position: -80px -64px; }
 div.wysiwyg ul.panel li a.empty { background-position: -64px -80px; }
 
 div.wysiwyg iframe { border: 0; margin: 5px 0 0 0; clear: left; width: 97.5% !important; }
+
+
+
+.search{
+	padding-bottom:10px;
+}
+.search .button{
+	line-height: 1.3em;
+}
+.search select,.search input{
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	padding: 3px;
+	border: 1px solid #CCC;
+}

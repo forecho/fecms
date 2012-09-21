@@ -21,6 +21,7 @@
 				<thead>
 					<tr>
 						<th>导航名称</th>
+						<th>导航栏目类型</th>
 						<th>操&nbsp;&nbsp;&nbsp;作</th>
 					</tr>
 				</thead>
@@ -37,9 +38,22 @@
 						?>
 						</td>
 						<td>
-							<a href="feadmin/category/<?php echo $row->id;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
+						<?php
+							switch ($row->type)
+							{
+							case 0:
+							  echo "菜单分类";
+							  break;
+							case 1:
+							  echo "单页面";
+							  break;
+							}
+						?>
+						</td>
+						<td>
+							<a href="feadmin/category/<?php echo $row->cid;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
 							&nbsp;
-							<a href="feadmin/categoryDelete/<?php echo $row->id;?>" title="删除"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
+							<a href="feadmin/categoryDelete/<?php echo $row->cid;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
 							<!-- <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a> -->
 						</td>
 					</tr>
@@ -52,11 +66,11 @@
 	  <form action="feadmin/categoryCreate/" method="post" class="registerform">
 		<fieldset>
 		<p>
-			<label><span class="need">* </span>请选择父级目录</label>
-			<select name="id" class="small-input">
+			<label>请选择父级目录</label>
+			<select name="cid" class="small-input">
 				<option value="0">根目录</option>
 				<?php foreach($category as $row):?>
-				<option value="<?php echo $row->id;?>">
+				<option value="<?php echo $row->cid;?>">
 					<?php
 						$count = count(explode('-',$row->bpath));
 						for($i=1;$i<$count;$i++){
@@ -66,6 +80,13 @@
 						?>
 				</option>
 				<?php endforeach;?>
+			</select>
+		</p>
+		<p>
+			<label>导航栏目类型</label>
+			<select name="sort">
+				<option value="0">菜单分类</option>
+				<option value="1">单页面</option>
 			</select>
 		</p>
 		

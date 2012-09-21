@@ -13,7 +13,7 @@ class Page
 		$this->url=$value['url'];
 		$this->size=$value['size'];
 		$this->total=$value['total'];
-		$this->segment=$value['uri'];
+		//$this->segment=$value['uri'];
 		  
 		$this->CI=& get_instance();
 		  
@@ -32,7 +32,10 @@ class Page
 		$config['base_url']=base_url($this->url);
 		$config['total_rows']=$this->total;
 		$config['per_page']=$this->size;
-		$config['uri_segment']=$this->segment;
+		//$config['uri_segment']=$this->segment;
+		//GET分页 传参
+		$config['page_query_string'] = TRUE;
+		
 		$config['num_links']=3;
 		$config['first_link']='首页';
 		$config['last_link']='末页';
