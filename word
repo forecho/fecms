@@ -1,17 +1,21 @@
 <NotepadPlus>
     <Session activeView="0">
-        <mainView activeIndex="6">
-            <File firstVisibleLine="76" xOffset="0" scrollWidth="1443" startPos="3202" endPos="3202" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\controllers\feadmin.php">
-                <Mark line="164" />
-                <Mark line="204" />
-                <Mark line="210" />
+        <mainView activeIndex="0">
+            <File firstVisibleLine="252" xOffset="0" scrollWidth="1912" startPos="8660" endPos="8660" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\controllers\feadmin.php">
+                <Mark line="21" />
+                <Mark line="198" />
+                <Mark line="238" />
+                <Mark line="244" />
             </File>
-            <File firstVisibleLine="29" xOffset="0" scrollWidth="1080" startPos="3208" endPos="3208" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\models\fe_model.php" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1588" startPos="918" endPos="918" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\postsView.php" />
-            <File firstVisibleLine="42" xOffset="0" scrollWidth="1523" startPos="97" endPos="97" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\posts.php" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1584" startPos="489" endPos="489" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\category.php" />
-            <File firstVisibleLine="25" xOffset="0" scrollWidth="1584" startPos="1618" endPos="1618" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\categoryList.php" />
-            <File firstVisibleLine="84" xOffset="0" scrollWidth="1278" startPos="2146" endPos="1976" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\layout.php" />
+            <File firstVisibleLine="36" xOffset="0" scrollWidth="1128" startPos="867" endPos="877" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\models\fe_model.php" />
+            <File firstVisibleLine="47" xOffset="0" scrollWidth="2744" startPos="2717" endPos="2717" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\layout.php" />
+            <File firstVisibleLine="105" xOffset="0" scrollWidth="1624" startPos="4759" endPos="4759" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\postsView.php" />
+            <File firstVisibleLine="4" xOffset="0" scrollWidth="1523" startPos="915" endPos="915" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\posts.php" />
+            <File firstVisibleLine="3" xOffset="0" scrollWidth="1584" startPos="923" endPos="923" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\category.php" />
+            <File firstVisibleLine="781" xOffset="0" scrollWidth="1712" startPos="22510" endPos="22510" selMode="0" lang="CSS" encoding="-1" filename="D:\workspace\Fecms\resources\css\style.css" />
+            <File firstVisibleLine="27" xOffset="0" scrollWidth="609" startPos="1107" endPos="1107" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\libraries\page.php" />
+            <File firstVisibleLine="7" xOffset="0" scrollWidth="1128" startPos="742" endPos="742" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\success.php" />
+            <File firstVisibleLine="34" xOffset="0" scrollWidth="1584" startPos="2123" endPos="2123" selMode="0" lang="PHP" encoding="-1" filename="D:\workspace\Fecms\application\views\admin\categoryList.php" />
         </mainView>
         <subView activeIndex="0" />
     </Session>

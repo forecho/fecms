@@ -53,8 +53,10 @@
 						<td>
 							<a href="feadmin/category/<?php echo $row->cid;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
 							&nbsp;
+							<?php if($row->cid != 1):?>
 							<a href="feadmin/categoryDelete/<?php echo $row->cid;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
 							<!-- <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a> -->
+							<?php endif;?>
 						</td>
 					</tr>
 				  <?php endforeach;?>
@@ -84,7 +86,7 @@
 		</p>
 		<p>
 			<label>导航栏目类型</label>
-			<select name="sort">
+			<select name="type">
 				<option value="0">菜单分类</option>
 				<option value="1">单页面</option>
 			</select>

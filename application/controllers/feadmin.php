@@ -5,15 +5,76 @@ class Feadmin extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('fe_model');
-		//$this->load->helper(array('form', 'url'));
+		$this->load->library('session');
+		$this->stop = "<script type='text/javascript'>window.parent.location.href='".base_url('feadmin/login')."';</script>";
     }
 	
+	
+	function index() {	
+        $this->load->view('admin/login');
+    }
+	
+	
+	//登陆
+	function login(){
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+
+		//echo $this->input->post('username');
+		//echo $this->input->post('password');
+
+		if ($this->form_validation->run()!= false) {
+			$_POST['password'] = md5($_POST['password']);
+			$res = $this->fe_model->numFormWhere('admin', $_POST);
+			//echo $this->input->post('username');
+			//echo $this->input->post('password');
+			if ($res!="") {
+				$this->session->set_userdata('username',$this->input->post('username'));
+				redirect('feadmin/postsList');
+			}else{
+				$data["error"] = "密码或用户名错误。";
+			}
+		}
+		$this->load->view('admin/login',@$data);
+	}
+
+	//退出
+	function logout($error = '') {
+		$this->session->sess_destroy();
+		$data["error"] = $error;
+		$this->load->view('admin/login',$data);
+	}
+
+	//修改密码
+
+	function pwdChange(){
+		$data['title_for_layout'] = '修改密码';
+		$this->layout->view('admin/pwdChange', $data);
+	
+	}
+	function pwdChangeOK() { 
+		$where['username'] = $this->session->userdata('username');
+		$where['password'] = $_POST['pwd'];
+
+		$res = $this->fe_model->numFormWhere('admin', $where);
+		
+		if ($res!="") {
+			//$row['password'] = $_POST['pwd1'];
+			$row['password'] = md5($_POST['pwd1']);
+			$res = $this->fe_model->updateForm('admin',$where, $row);
+			$this->logout('密码修改成功，请重新登录');
+		}else{
+			$this->success('密码修改失败，你输入的密码不正确', 'no');
+		}
+	}
+	
     function postsList() {
-		$data['posts'] = $this->fe_model->page('posts', 'feadmin/index?',  @$_GET['per_page'], 3, 'id desc','category','posts.category = category.cid ');
-		//$data['posts'] = $this->fe_model->pageJoin('posts', 'feadmin/index', 3, 3, 'posts.id desc','','');
+		$data['posts'] = $this->fe_model->page('posts', 'feadmin/postsList?',  @$_GET['per_page'], 2, 'id desc','category','posts.category = category.cid ');
 		//print_r($data['posts']);
 		$data['category'] = $this->fe_model->selectCate();
-        $data['title_for_layout'] = 'My Posts';
+		//$data['category1'] = $this->fe_model->selectFormWhere('category',);
+		//print_r($data['category1']);
+        $data['title_for_layout'] = '文章列表';
 		
         $this->layout->view('admin/postsView', $data);
     }
@@ -51,7 +112,7 @@ class Feadmin extends CI_Controller {
 		$where['id'] = $this->uri->segment(3,0);
 		$num=$this->fe_model->numFormWhere('posts', $where);
 		if($num == 0){
-			$this->success('没有这篇文章', 'no');
+			redirect('feadmin/postsList');
 		}
 	
 		$data['postsOne'] = $this->fe_model->selectFormWhere('posts',array('id'=>$this->uri->segment(3)));
@@ -155,7 +216,7 @@ class Feadmin extends CI_Controller {
         $data['category'] = $this->fe_model->selectCate();
 
 		//print_r($data['category']);
-        $data['title_for_layout'] = 'My Ueditor';
+        $data['title_for_layout'] = '分类导航';
 		
         $this->layout->view('admin/categoryList', $data);
     
@@ -191,8 +252,13 @@ class Feadmin extends CI_Controller {
 	}
 	
 	function category(){
+		$where['cid'] = $this->uri->segment(3,0);
+		$num=$this->fe_model->numFormWhere('category', $where);
+		if($num == 0){
+			redirect('feadmin/categoryList');
+		}
 		
-		$data['title_for_layout'] = 'My Ueditor';
+		$data['title_for_layout'] = '修改分类导航';
 		$data['category'] = $this->fe_model->selectCate();
 		$data['categoryOne'] = $this->fe_model->selectFormWhere('category',array('cid'=>$this->uri->segment(3)));
 		
@@ -243,6 +309,7 @@ class Feadmin extends CI_Controller {
 	
 	function categoryDelete(){
 		$where['cid'] = $this->uri->segment(3,0);
+		$row['category'] = $this->uri->segment(3,0);
 		$num=$this->fe_model->numFormWhere('category', $where);
 		
 		if($num != 0){
@@ -254,6 +321,10 @@ class Feadmin extends CI_Controller {
 			if($num1 == 0){
 			
 				$this->fe_model->deleteForm('category',$where);
+				
+				$post['category'] = 1;
+				$this->fe_model->updateForm('posts', $row, $post);
+				
 				$this->success(CATEGORY.'删除成功','yes');
 			
 			}else{
@@ -269,11 +340,6 @@ class Feadmin extends CI_Controller {
 	
 	
 	
-	
-	function form(){
-		
-		 $this->layout->view('admin/form');
-	}
 	
 	
 	

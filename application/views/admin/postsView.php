@@ -116,6 +116,11 @@
 			<label><span class="need">* </span>分类</label>
 			<select name="category" class="small-input">
 				<?php foreach($category as $row):?>
+				<?php 
+					$is_Onepage = $this->fe_model->numFormWhere('posts',array('category'=>$row->cid));
+					if($row->type == 1 && $is_Onepage ==1){}
+					else{
+				?>
 				<option value="<?php echo $row->cid;?>">
 					<?php
 						$count = count(explode('-',$row->bpath));
@@ -125,7 +130,7 @@
 							echo '|-',$row->name;
 						?>
 				</option>
-				<?php endforeach;?>
+				<?php }endforeach;?>
 			</select>
 		</p>
 		<p>

@@ -13,7 +13,7 @@
 		<label><span class="need">* </span>分类</label>
 		<select name="category" class="small-input">
 			<?php foreach($category as $row):?>
-			<option value="<?php echo $row->cid;?>">
+			<option value="<?php echo $row->cid;?>" <?php if($postsOne->category == $row->cid){echo 'selected="selected"';}?>>
 				<?php
 					$count = count(explode('-',$row->bpath));
 					for($i=1;$i<$count;$i++){

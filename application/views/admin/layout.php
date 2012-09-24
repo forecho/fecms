@@ -52,11 +52,11 @@ $(function(){
       <!-- Sidebar with logo and menu -->
       <h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
       <!-- Logo (221px wide) -->
-      <a href="http://www.readeep.com"><img id="logo" src="resources/images/logo.png" alt="访问深度阅读" /></a>
+      <a href="<?php echo base_url('feadmin/postsList');?>" title="后台首页"><img id="logo" src="resources/images/logo1.png" alt="访问深度阅读" /></a>
       <!-- Sidebar Profile links -->
-      <div id="profile-links"> 你好, <a href="#" title="Edit your profile">管理员</a>, 你有 <a href="#messages" rel="modal" title="3 Messages">3 条信息</a><br />
+      <div id="profile-links"> 你好, <a href="feadmin/pwdChange" title="修改密码"><?php echo  $this->session->userdata('username');?></a><!--, 你有  <a href="#messages" rel="modal" title="3 Messages">3 条信息</a> --><br />
         <br />
-        <a href="#" title="http://www.readeep.com">查看网站</a> | <a href="#" title="Sign Out">退出</a> </div>
+        <a href="<?php echo base_url();?>" title="前台首页">查看网站</a> | <a href="feadmin/logout" title="退出">退出</a> </div>
       <ul id="main-nav">
         <!-- Accordion Menu -->
         <li> <a href="#/" class="nav-top-item no-submenu">
@@ -70,7 +70,6 @@ $(function(){
             <!-- Add class "current" to sub menu items also -->
             <!-- <li><a href="feadmin/category">添加导航</a></li> -->
 			<li><a <?php if($this->uri->segment(2) == 'categoryList' || $this->uri->segment(2) == 'category'){echo 'class="current"';}?> href="feadmin/categoryList">导航列表</a></li>
-			<li><a href="feadmin/form">表单</a></li>
           </ul>
         </li>
         <li> <a href="#" class="nav-top-item">页面 </a>
@@ -142,7 +141,13 @@ $(function(){
     </div>
     </noscript>
     <!-- Page Head -->
-		<?php echo $content_for_layout; ?>
+		<?php
+			if(!$this->session->userdata('username')){
+				redirect('feadmin/login');
+			}else{
+				echo $content_for_layout; 
+			}
+		?>
     <!-- End Notifications -->
     <div id="footer"> <small>
       <!-- Remove this notice or replace it with whatever you want -->
