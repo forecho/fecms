@@ -98,8 +98,6 @@ class Feadmin extends CI_Controller {
 			$this->load->view('admin/postsView');
 
 		}else{
-			$_POST['content'] = $_POST['editorValue'];
-			unset($_POST['editorValue']);
 			//print_r($_POST);
 			$this->fe_model->insertForm('posts', $_POST);
 			$this->success(POSTS.'添加成功', 'yes');
@@ -147,8 +145,6 @@ class Feadmin extends CI_Controller {
 					unlink($file_path);
 				}
 				$_POST['image'] = $this->fileUpdate();
-				$_POST['content'] = $_POST['editorValue'];
-				unset($_POST['editorValue']);
 				//print_r($_POST);
 				$this->fe_model->updateForm('posts', $where, $_POST);
 				$this->success(POSTS.'修改成功', 'yes');

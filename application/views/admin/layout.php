@@ -24,9 +24,17 @@ jQuery Datepicker Plugin
 <script type="text/javascript" src="resources/scripts/jquery.datePicker.js"></script>
 <script type="text/javascript" src="resources/scripts/jquery.date.js"></script> -->
 
-<script type="text/javascript" src="ueditor/editor_config.js"></script>
-<script type="text/javascript" src="ueditor/editor_all_min.js"></script>
-<link rel="stylesheet" href="ueditor/themes/default/ueditor.css"/>
+<!-- <script type="text/javascript" src="ueditor/editor_config.js"></script>
+<script type="text/javascript" src="ueditor/editor_all.js"></script>
+<link rel="stylesheet" href="ueditor/themes/default/ueditor.css"/> -->
+<script charset="utf-8" src="kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="kindeditor/lang/zh_CN.js"></script>
+<script>
+        var editor;
+        KindEditor.ready(function(K) {
+                editor = K.create('#editor_id');
+        });
+</script>
 
 <script type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
 

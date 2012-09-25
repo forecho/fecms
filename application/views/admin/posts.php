@@ -34,12 +34,7 @@
 	</p>
 	<p>
 		<label><span class="need">* </span>文本编辑器</label>
-		<script type="text/plain" id="myEditor" ><?php echo $postsOne->content;?></script>
-		<script type="text/javascript">
-			var editor = new baidu.editor.ui.Editor();
-			editor.render("myEditor");
-		</script>
-	 <!--  <textarea class="text-input textarea wysiwyg" id="textarea" name="textfield" cols="79" rows="15"></textarea> -->
+		<textarea id="editor_id" name="content" style="width:90%;height:450px;"><?php echo $postsOne->content;?></textarea>
 	</p>
 	<p>
 		<label for=""><span class="need">* </span>时间</label>

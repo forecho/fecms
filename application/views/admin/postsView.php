@@ -150,12 +150,13 @@
 		  这是另外一个单选按钮 </p> -->
 		<p>
 			<label><span class="need">* </span>文本编辑器</label>
-			<script type="text/plain" id="myEditor" ></script>
+			<textarea id="editor_id" name="content" style="width:90%;height:450px;"></textarea>
+			<!-- <script type="text/plain" id="myEditor" ></script>
 			<script type="text/javascript">
 				var editor = new baidu.editor.ui.Editor();
 				editor.render("myEditor");
-			</script>
-		 <!--  <textarea class="text-input textarea wysiwyg" id="textarea" name="textfield" cols="79" rows="15"></textarea> -->
+			</script> -->
+		 
 		</p>
 		<p>
 			<label for=""><span class="need">* </span>时间</label>
