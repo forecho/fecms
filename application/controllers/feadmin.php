@@ -139,12 +139,16 @@ class Feadmin extends CI_Controller {
 				$this->load->view('admin/postVews');
 
 			}else{
+				$image = $this->fileUpdate();				
 				$postsOne = $this->fe_model->selectFormWhere('posts',$where);
-				if($postsOne->image != ""){
-					$file_path = 'uploads/img/'.$postsOne->image;
-					unlink($file_path);
+				if($image != ""){
+					if($postsOne->image != ""){
+						$file_path = 'uploads/img/'.$postsOne->image;
+						unlink($file_path);
+					}
+					$_POST['image'] = $image;
 				}
-				$_POST['image'] = $this->fileUpdate();
+					
 				//print_r($_POST);
 				$this->fe_model->updateForm('posts', $where, $_POST);
 				$this->success(POSTS.'修改成功', 'yes');
