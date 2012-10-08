@@ -289,13 +289,12 @@ class Feadmin extends CI_Controller {
 					$category = $this->fe_model->selectFormWhere('category',array('cid'=>$_POST['cid']));
 					$_POST['pid'] = $category->cid;
 					$_POST['path'] = $category->path.'-'.$_POST['cid'];
-					$_POST['cid'] = $this->uri->segment(3,0);
 				
 				}else{
 					$_POST['pid']  = 0;
 					$_POST['path']  = 0;
 				}
-				
+					$_POST['cid'] = $this->uri->segment(3,0);
 				//array_splice($_POST, 0, 1);
 				
 				$this->fe_model->updateForm('category', $where, $_POST);
