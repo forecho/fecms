@@ -67,19 +67,24 @@ $(function(){
         <a href="<?php echo base_url();?>" title="前台首页">查看网站</a> | <a href="feadmin/logout" title="退出">退出</a> </div>
       <ul id="main-nav">
         <!-- Accordion Menu -->
-        <li> <a href="#/" class="nav-top-item no-submenu">
+       <li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'categoryList' || $this->uri->segment(2) == 'category'){echo 'current';}?>">
           <!-- Add the class "no-submenu" to menu items with no sub menu -->
-          仪表盘 </a> </li>
-        <li> <a href="#" class="nav-top-item current">
+          导航 </a> 
+		  <ul>
+		  	<li><a <?php if($this->uri->segment(2) == 'categoryList' || $this->uri->segment(2) == 'category'){echo 'class="current"';}?> href="feadmin/categoryList">导航列表</a></li>
+		  </ul>
+		  </li>
+        <li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'postsList'|| $this->uri->segment(2) == 'postsSearch' || $this->uri->segment(2) == 'posts'){echo 'current';}?>">
           <!-- Add the class "current" to current menu item -->
           文章 </a>
           <ul>
             <li><a <?php if($this->uri->segment(2) == 'postsList'|| $this->uri->segment(2) == 'postsSearch' || $this->uri->segment(2) == 'posts'){echo 'class="current"';}?> href="feadmin/postsList">管理文章</a></li>
             <!-- Add class "current" to sub menu items also -->
             <!-- <li><a href="feadmin/category">添加导航</a></li> -->
-			<li><a <?php if($this->uri->segment(2) == 'categoryList' || $this->uri->segment(2) == 'category'){echo 'class="current"';}?> href="feadmin/categoryList">导航列表</a></li>
+			
           </ul>
         </li>
+
         <li> <a href="#" class="nav-top-item">页面 </a>
           <ul>
             <li><a href="#">创建新页面</a></li>
@@ -94,60 +99,25 @@ $(function(){
             <li><a href="#">相册设置</a></li>
           </ul>
         </li>
-        <li> <a href="#" class="nav-top-item"> 活动日程表 </a>
+        <li> <a href="#" class="nav-top-item"> 留言管理 </a>
           <ul>
-            <li><a href="#">日程浏览</a></li>
-            <li><a href="#">创建新日程</a></li>
-            <li><a href="#">日程设置</a></li>
+            <li><a href="#">留言列表</a></li>
           </ul>
         </li>
-        <li> <a href="#" class="nav-top-item">设置</a>
+        <li> <a href="#" class="nav-top-item">首页幻灯片管理</a>
           <ul>
-            <li><a href="#">常规设置</a></li>
-            <li><a href="#">外观设置</a></li>
-            <li><a href="#">个人资料设置</a></li>
-            <li><a href="#">用户和权限</a></li>
+            <li><a href="#">首页幻灯片列表</a></li>
           </ul>
         </li>
       </ul>
       <!-- End #main-nav -->
-      <div id="messages" style="display: none">
-        <!-- Messages are shown when a link with these attributes are clicked: href="#messages" rel="modal"  -->
-        <h3>3条信息</h3>
-        <p> <strong>17th May 2009</strong> by 管理员<br />
-          日志 <small><a href="#" class="remove-link" title="Remove message">移动</a></small> </p>
-        <p> <strong>2nd May 2009</strong> by Jane 管理员<br />
-         日志 <small><a href="#" class="remove-link" title="Remove message">移动</a></small> </p>
-        <p> <strong>25th April 2009</strong> by 管理员<br />
-        日志 <small><a href="#" class="remove-link" title="Remove message">移动</a></small> </p>
-        <form action="#" method="post">
-          <h4>新信息</h4>
-          <fieldset>
-          <textarea class="textarea" name="textfield" cols="79" rows="5"></textarea>
-          </fieldset>
-          <fieldset>
-          <select name="dropdown" class="small-input">
-            <option value="option1">发送给</option>
-            <option value="option2">每个人</option>
-            <option value="option3">管理员</option>
-          </select>
-          <input class="button" type="submit" value="发送" />
-          </fieldset>
-        </form>
-      </div>
+      
       <!-- End #messages -->
     </div>
   </div>
   <!-- End #sidebar -->
   <div id="main-content">
     <!-- Main Content Section with everything -->
-    <noscript>
-    <!-- Show a notification if the user has disabled javascript -->
-    <div class="notification error png_bg">
-      <div> Javascript is disabled or is not supported by your browser. Please <a href="http://browsehappy.com/" title="Upgrade to a better browser">upgrade</a> your browser or <a href="http://www.google.com/support/bin/answer.py?answer=23852" title="Enable Javascript in your browser">enable</a> Javascript to navigate the interface properly.
-        Download From <a href="http://www.exet.tk">exet.tk</a></div>
-    </div>
-    </noscript>
     <!-- Page Head -->
 		<?php
 			if(!$this->session->userdata('username')){
