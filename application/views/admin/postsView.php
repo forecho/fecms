@@ -85,6 +85,7 @@
 							</td>
 							<td><a href="feadmin/posts/<?php echo $post->id;?>" title="修改文章"><?php echo $post->title;?></a></td>
 							<td><a href="feadmin/postsSearch/?category=<?php echo $post->category;?>" title="查询“<?php echo $post->name;?>”分类"><?php echo $post->name;?></a></td>
+							<!-- <td><?php //echo date('Y-m-d', strtotime($post->addtime));?></td> -->
 							<td><?php echo $post->addtime;?></td>
 							<td>
 								<a href="feadmin/posts/<?php echo $post->id;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
@@ -160,7 +161,7 @@
 		</p>
 		<p>
 			<label for=""><span class="need">* </span>时间</label>
-			<?php $class = 'id="d11" onClick="WdatePicker()" class= "text-input small-input" autocomplete="off" datatype="*"';echo form_input('addtime',date("Y-m-d"),$class);?>
+				<input type="text" name="addtime" value="<?php echo date("Y-m-d H:i:s");?>" id="d11" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class= "text-input small-input" autocomplete="off" datatype="*" />
 			<span class="Validform_checktip"></span>
 		</p>
 		<p>

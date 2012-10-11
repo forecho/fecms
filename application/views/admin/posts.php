@@ -38,7 +38,7 @@
 	</p>
 	<p>
 		<label for=""><span class="need">* </span>时间</label>
-		<?php $class = 'id="d11" onClick="WdatePicker()" class= "text-input small-input" autocomplete="off" datatype="*"';echo form_input('addtime',$postsOne->addtime,$class);?>
+			<input type="text" name="addtime" value="<?php echo $postsOne->addtime;?>" id="d11" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class= "text-input small-input" autocomplete="off" datatype="*" />
 		<span class="Validform_checktip"></span>
 	</p>
 	<p>
