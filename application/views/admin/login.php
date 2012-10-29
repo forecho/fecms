@@ -13,9 +13,14 @@
 <script type="text/javascript">
 $(function(){
 	//$(".registerform").Validform();  //就这一行代码！;
-	
+		
 	$(".registerform").Validform({
-		tiptype:2
+		tiptype:function(msg,o,cssctl){
+			var objtip=$("#msgdemo2");
+			cssctl(objtip,o.type);
+			objtip.text(msg);
+		},
+		//ajaxPost:true
 	});
 })
 </script>
@@ -52,7 +57,7 @@ $(function(){
 				<div class="clear"></div>
 				<p>
 					<?php if(isset($error)){echo '<span style="color:red">'.$error.'</span>';}?>
-					<input class="button" type="submit" value="登录" />
+					<input class="button" type="submit" value="登录" /><span id="msgdemo2" style="margin-left:30px;"></span>
 				</p>
 				
 			</form>

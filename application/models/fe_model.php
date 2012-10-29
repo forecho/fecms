@@ -36,7 +36,7 @@ class Fe_model extends CI_Model{
 	
 	function selectCate(){
 
-		return $this->db->query("SELECT cid, path, name, type, CONCAT( path,  '-', cid ) AS bpath FROM  `category` ORDER BY bpath")->result();
+		return $this->db->query("SELECT cid, path, name, type, CONCAT( path,  '-', cid ) AS bpath FROM  `fe_category` ORDER BY bpath")->result();
 
 	}
 	

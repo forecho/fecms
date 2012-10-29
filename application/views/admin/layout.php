@@ -129,7 +129,7 @@ $(function(){
     <!-- End Notifications -->
     <div id="footer"> <small>
       <!-- Remove this notice or replace it with whatever you want -->
-      &#169; Copyright 2010 Your Company | Powered by <a href="http://www.readeep.com">readeep.com</a> | <a href="#">回到顶部</a> </small> </div>
+      &#169; Copyright 2010 Your Company | Powered by <a href="http://www.forecho.com">forecho.com</a> | <a href="#">回到顶部</a> </small> </div>
     <!-- End #footer -->
   </div>
   <!-- End #main-content -->
