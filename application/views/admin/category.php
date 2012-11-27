@@ -1,6 +1,6 @@
 <div class="content-box">
 	<div class="content-box-header">
-		<h3 style="cursor:pointer;">修改分类导航</h3>
+		<h3><?php echo $title_for_layout;?></h3>
 	</div>
 	<div class="content-box-content">
 	<form action="feadmin/categoryUpdate/<?php echo $this->uri->segment(3)?>" method="post" class="registerform">

@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $title_for_layout; ?></title>
+<!-- <title><?php echo __TITLE__;?></title> -->
 <base href="<?php echo base_url()?>" />
 <!--                       CSS                       -->
 <!-- Reset Stylesheet -->
@@ -27,8 +28,8 @@ jQuery Datepicker Plugin
 <!-- <script type="text/javascript" src="ueditor/editor_config.js"></script>
 <script type="text/javascript" src="ueditor/editor_all.js"></script>
 <link rel="stylesheet" href="ueditor/themes/default/ueditor.css"/> -->
-<script charset="utf-8" src="kindeditor/kindeditor.js"></script>
-<script charset="utf-8" src="kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="resources/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="resources/kindeditor/lang/zh_CN.js"></script>
 <script>
         var editor;
         KindEditor.ready(function(K) {
@@ -36,7 +37,7 @@ jQuery Datepicker Plugin
         });
 </script>
 
-<script type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="resources/My97DatePicker/WdatePicker.js"></script>
 
 <script type="text/javascript" src="resources/scripts/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="resources/scripts/Validform_v5.1_min.js"></script>
@@ -85,13 +86,17 @@ $(function(){
           </ul>
         </li>
 
-        <li> <a href="#" class="nav-top-item">页面 </a>
+        <li> <a href="#" class="nav-top-item">网站配置信息</a>
           <ul>
-            <li><a href="#">创建新页面</a></li>
-            <li><a href="#">管理页面</a></li>
+            <li><a href="feadmin/optionsList">配置信息管理</a></li>
           </ul>
         </li>
-        <li> <a href="#" class="nav-top-item"> 图片长廊 </a>
+		<li> <a href="#" class="nav-top-item">读取Excel表格</a>
+          <ul>
+            <li><a href="excel/excelList">Excel内容</a></li>
+          </ul>
+        </li>
+        <li> <a href="#" class="nav-top-item">图片管理</a>
           <ul>
             <li><a href="#">上传图片</a></li>
             <li><a href="#">管理图片</a></li>

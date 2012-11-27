@@ -6,7 +6,6 @@ class Feadmin extends CI_Controller {
         parent::__construct();
         $this->load->model('fe_model');
 		$this->load->library('session');
-		$this->stop = "<script type='text/javascript'>window.parent.location.href='".base_url('feadmin/login')."';</script>";
     }
 	
 	
@@ -115,7 +114,7 @@ class Feadmin extends CI_Controller {
 	
 		$data['postsOne'] = $this->fe_model->selectFormWhere('posts',array('id'=>$this->uri->segment(3)));
 		$data['category'] = $this->fe_model->selectCate();
-        $data['title_for_layout'] = 'My Posts';
+        $data['title_for_layout'] = '修改文章';
 		
         $this->layout->view('admin/posts', $data);
     }
@@ -336,8 +335,68 @@ class Feadmin extends CI_Controller {
 	}
 	
 	
+	//网站的配置信息
+	function optionsList(){
+		$data['options'] = $this->fe_model->selectForm('options');
+		
+		//print_r($data['options']);
+		$data['title_for_layout'] = '网站信息';
+		$this->layout->view('admin/optionsList',$data);
+		
+	}
+	
+	function optionsCreate(){
+		$this->form_validation->set_rules('option_name','信息名称','required');
+		
+		$this->fe_model->insertForm('options', $_POST);
+		$this->success('信息名称成功', 'yes');
+
+	}
 	
 	
+	// function optionsUpdate(){
+
+		// $where['id'] = $this->uri->segment(3,0);
+		
+		// $this->form_validation->set_rules('name','名称','required');
+		// $this->form_validation->set_rules('material','导材质','required');
+		// $this->form_validation->set_rules('specification','规格','required');
+		// $this->form_validation->set_rules('weight','重量','required');
+		// $this->form_validation->set_rules('place','导产地','required');
+		// $this->form_validation->set_rules('unit','单位','required');
+		// $this->form_validation->set_rules('location','存放地','required');
+		
+		// $this->form_validation->set_rules('species','种类','required');
+
+		// if($this->form_validation->run()==FALSE){
+			////$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
+			// $this->load->view('admin/optionsList/'.$this->uri->segment(3));
+		// }else{
+		
+			// $this->fe_model->updateForm('options', $where, $_POST);
+			// $this->success('资源更新成功', 'yes');
+
+		// }
+	// }
+	
+	
+	
+	// function optionsDelete(){
+		// $where['id'] = $this->uri->segment(3,0);
+		// $num=$this->fe_model->numFormWhere('options', $where);
+		
+		// if($num != 0){
+		
+			// $this->fe_model->deleteForm('options',$where);
+			// $this->success('资源删除成功','yes');
+		
+		// }else{
+		
+			// $this->success('资源删除失败,请检查之后重新操作','no');	
+		
+		// }
+	
+	// }
 	
 	
 	

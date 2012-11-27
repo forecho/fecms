@@ -1,6 +1,6 @@
 <div class="content-box">
 	<div class="content-box-header">
-		<h3 style="cursor:pointer;">修改密码</h3>
+		<h3><?php echo $title_for_layout;?></h3>
 	</div>
 	<div class="content-box-content">
 	<form action="feadmin/pwdChangeOK" method="post" class="registerform">

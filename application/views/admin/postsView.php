@@ -1,7 +1,7 @@
 <div class="content-box">
   <!-- Start Content Box -->
 	<div class="content-box-header">
-		<h3>文章内容</h3>
+		<h3><?php echo $title_for_layout;?></h3>
 		<ul class="content-box-tabs">
 			<li><a href="#tab1" class="default-tab">列表</a></li>
 			<!-- href must be unique and match the id of target div -->
