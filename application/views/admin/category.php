@@ -3,14 +3,14 @@
 		<h3><?php echo $title_for_layout;?></h3>
 	</div>
 	<div class="content-box-content">
-	<form action="feadmin/categoryUpdate/<?php echo $this->uri->segment(3)?>" method="post" class="registerform">
+	<form action="feadmin/category_update/<?php echo $this->uri->segment(3)?>" method="post" class="registerform">
 		<fieldset>
 		<p>
 			<label><span class="need">* </span>请选择父级目录</label>
 			<select name="cid" class="small-input">
 				<option value="0">根目录</option>
 				<?php foreach($category as $row):?>
-				<option value="<?php echo $row->cid;?>" <?php if($row->cid == $categoryOne->pid){echo 'selected="selected"';}?>>
+				<option value="<?php echo $row->cid;?>" <?php if($row->cid == $category_one->pid){echo 'selected="selected"';}?>>
 					<?php
 						$count = count(explode('-',$row->bpath));
 						for($i=1;$i<$count;$i++){
@@ -25,13 +25,13 @@
 		<p>
 			<label>导航栏目类型</label>
 			<select name="type">
-				<option value="0" <?php if($categoryOne->type == 0){echo 'selected="selected"';}?>>菜单分类</option>
-				<option value="1" <?php if($categoryOne->type == 1){echo 'selected="selected"';}?>>单页面</option>
+				<option value="0" <?php if($category_one->type == 0){echo 'selected="selected"';}?>>菜单分类</option>
+				<option value="1" <?php if($category_one->type == 1){echo 'selected="selected"';}?>>单页面</option>
 			</select>
 		</p>
 		<p>
 		  <label><span class="need">* </span>导航名称</label>
-		  <input class="text-input small-input" type="text" id="small-input" name="name" value="<?php echo $categoryOne->name;?>" datatype="s2-10" errormsg="昵称至少2个字符,最多10个字符！" />
+		  <input class="text-input small-input" type="text" id="small-input" name="name" value="<?php echo $category_one->name;?>" datatype="s2-10" errormsg="昵称至少2个字符,最多10个字符！" />
 		  <span class="Validform_checktip"></span>
 		  <br />
 		</p>

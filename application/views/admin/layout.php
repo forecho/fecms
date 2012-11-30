@@ -61,25 +61,25 @@ $(function(){
       <!-- Sidebar with logo and menu -->
       <h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
       <!-- Logo (221px wide) -->
-      <a href="<?php echo base_url('feadmin/postsList');?>" title="后台首页"><img id="logo" src="resources/images/logo1.png" alt="访问深度阅读" /></a>
+      <a href="<?php echo base_url('feadmin/posts_list');?>" title="后台首页"><img id="logo" src="resources/images/logo1.png" alt="访问深度阅读" /></a>
       <!-- Sidebar Profile links -->
-      <div id="profile-links"> 你好, <a href="feadmin/pwdChange" title="修改密码"><?php echo  $this->session->userdata('username');?></a><!--, 你有  <a href="#messages" rel="modal" title="3 Messages">3 条信息</a> --><br />
+      <div id="profile-links"> 你好, <a href="feadmin/pwd_change" title="修改密码"><?php echo  $this->session->userdata('username');?></a><!--, 你有  <a href="#messages" rel="modal" title="3 Messages">3 条信息</a> --><br />
         <br />
         <a href="<?php echo base_url();?>" title="前台首页">查看网站</a> | <a href="feadmin/logout" title="退出">退出</a> </div>
       <ul id="main-nav">
         <!-- Accordion Menu -->
-       <li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'categoryList' || $this->uri->segment(2) == 'category'){echo 'current';}?>">
+       <li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'category_list' || $this->uri->segment(2) == 'category'){echo 'current';}?>">
           <!-- Add the class "no-submenu" to menu items with no sub menu -->
           导航 </a> 
 		  <ul>
-		  	<li><a <?php if($this->uri->segment(2) == 'categoryList' || $this->uri->segment(2) == 'category'){echo 'class="current"';}?> href="feadmin/categoryList">导航列表</a></li>
+		  	<li><a <?php if($this->uri->segment(2) == 'category_list' || $this->uri->segment(2) == 'category'){echo 'class="current"';}?> href="feadmin/category_list">导航列表</a></li>
 		  </ul>
 		  </li>
-        <li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'postsList'|| $this->uri->segment(2) == 'postsSearch' || $this->uri->segment(2) == 'posts'){echo 'current';}?>">
+        <li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'posts_list'|| $this->uri->segment(2) == 'posts_search' || $this->uri->segment(2) == 'posts'){echo 'current';}?>">
           <!-- Add the class "current" to current menu item -->
           文章 </a>
           <ul>
-            <li><a <?php if($this->uri->segment(2) == 'postsList'|| $this->uri->segment(2) == 'postsSearch' || $this->uri->segment(2) == 'posts'){echo 'class="current"';}?> href="feadmin/postsList">管理文章</a></li>
+            <li><a <?php if($this->uri->segment(2) == 'posts_list'|| $this->uri->segment(2) == 'posts_search' || $this->uri->segment(2) == 'posts'){echo 'class="current"';}?> href="feadmin/posts_list">管理文章</a></li>
             <!-- Add class "current" to sub menu items also -->
             <!-- <li><a href="feadmin/category">添加导航</a></li> -->
 			
@@ -88,12 +88,12 @@ $(function(){
 
         <li> <a href="#" class="nav-top-item">网站配置信息</a>
           <ul>
-            <li><a href="feadmin/optionsList">配置信息管理</a></li>
+            <li><a href="feadmin/options_list">配置信息管理</a></li>
           </ul>
         </li>
-		<li> <a href="#" class="nav-top-item">读取Excel表格</a>
+		<li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'excel_list'|| $this->uri->segment(2) == 'excel_search' || $this->uri->segment(2) == 'excel'){echo 'current';}?>">读取Excel表格</a>
           <ul>
-            <li><a href="excel/excelList">Excel内容</a></li>
+            <li><a <?php if($this->uri->segment(2) == 'excel_list'|| $this->uri->segment(2) == 'excel_search' || $this->uri->segment(2) == 'excel'){echo 'class="current"';}?> href="excel/excel_list">Excel内容</a></li>
           </ul>
         </li>
         <li> <a href="#" class="nav-top-item">图片管理</a>

@@ -21,34 +21,34 @@ class Fe_model extends CI_Model{
 
 	
 	//创建
-	function insertForm($form,$values){
+	function insert_form($form,$values){
 	
 		$this->db->insert($form,$values);
 	
 	}
 	
 	//查询
-	function selectForm($form){
+	function select_form($form){
 
 		return $this->db->get($form)->result();
 
 	}
 	
-	function selectCate(){
+	function select_cate(){
 
 		return $this->db->query("SELECT cid, path, name, type, CONCAT( path,  '-', cid ) AS bpath FROM  `fe_category` ORDER BY bpath")->result();
 
 	}
 	
 	
-	function selectFormWhere($form,$where){
+	function select_form_where($form,$where){
 
 		return $this->db->get_where($form, $where)->row();
 
 	}
 	
 	//更新
-	function updateForm($form,$where,$value){
+	function update_form($form,$where,$value){
 
 		$this->db->where($where);
 		$this->db->update($form,$value);	
@@ -56,26 +56,26 @@ class Fe_model extends CI_Model{
 	}
 
 	//删除
-	function deleteForm($form,$where){
+	function delete_form($form,$where){
 
 		$this->db->delete($form,$where);
 
 	}
 
-	function numFormWhere($form,$where){
+	function num_form_where($form,$where){
 
 		$this->db->where($where);
 		return $this->db->get($form)->num_rows();
 
 	}
-	// function numFormLike($form,$like){
+	// function num_form_like($form,$like){
 
 		// $this->db->like($like);
 		// return $this->db->get($form)->num_rows();
 
 	// }
 	
-	function numFormLikeIn($form, $key, $value ,$in){
+	function num_form_like_in($form, $key, $value ,$in){
 
 		$this->db->like($key, $value ,$in);
 		return $this->db->get($form)->num_rows();
@@ -86,7 +86,7 @@ class Fe_model extends CI_Model{
 	
 	
 	//分页
-	function page($form, $url, $offset, $size, $order, $join, $joinArray){
+	function page($form, $url, $offset, $size, $order, $join, $join_array){
 
 		$fy['url'] = $url;
 		$fy['total'] = $data['total'] = $this->fy_n($form);
@@ -98,7 +98,7 @@ class Fe_model extends CI_Model{
 		//$info['start'] = $data['start'] = $this->uri->segment($offset, 0);
 		$info['start'] = $data['start'] = $offset;
 		$info['order'] = $order;
-		$data['admin'] = $this->fy_info($form, $info, $join, $joinArray);
+		$data['admin'] = $this->fy_info($form, $info, $join, $join_array);
 		
 		return $data;
 
@@ -110,21 +110,21 @@ class Fe_model extends CI_Model{
 
 	}
 	
-	function fy_info($form,$value,$join,$joinArray){
+	function fy_info($form,$value,$join,$join_array){
 		
 		$this->db->order_by($value['order']);
 		$this->db->limit($value['size'],$value['start']);
 		if($join != ""){
-			$this->db->join($join,$joinArray);
+			$this->db->join($join,$join_array);
 		}
 		return $this->db->get($form)->result();
 
 	}
 	
-	function pageWhere($form, $url, $offset, $size, $where, $order, $join, $joinArray){
+	function page_where($form, $url, $offset, $size, $where, $order, $join, $join_array){
 
 			$fy['url'] = $url;
-			$fy['total'] = $data['total'] = $this->p_numWhere($form, $where);
+			$fy['total'] = $data['total'] = $this->p_num_where($form, $where);
 			$fy['size'] = $data['size'] =$info['size'] = $size;
 			//$fy['uri'] = $offset;
 			$this->load->library('page', $fy);
@@ -133,12 +133,12 @@ class Fe_model extends CI_Model{
 			//$info['start'] = $data['start'] = $this->uri->segment(offset, 0);
 			$info['start'] = $data['start'] = $data['start'] = $offset;
 			$info['order'] = $order;
-			$data['admin'] = $this->fy_infoWhere($form, $where, $info, $join, $joinArray);
+			$data['admin'] = $this->fy_info_where($form, $where, $info, $join, $join_array);
 
 			return $data;
 
 	}
-	function p_numWhere($form, $where){
+	function p_num_where($form, $where){
 
 		if(isset($where['where'])){
 			$this->db->where($where['where']);
@@ -151,7 +151,7 @@ class Fe_model extends CI_Model{
 
 	}
 	
-	function fy_infoWhere($form, $where, $value, $join, $joinArray){
+	function fy_info_where($form, $where, $value, $join, $join_array){
 
 		if(isset($where['where'])){
 			$this->db->where($where['where']);
@@ -163,7 +163,7 @@ class Fe_model extends CI_Model{
 		$this->db->order_by($value['order']);
 		$this->db->limit($value['size'],$value['start']);
 		if($join != ""){
-			$this->db->join($join,$joinArray);
+			$this->db->join($join,$join_array);
 		}
 
 		return $this->db->get($form)->result();

@@ -3,7 +3,7 @@
 		<h3><?php echo $title_for_layout;?></h3>
 	</div>
 	<div class="content-box-content">
-	<form action="feadmin/pwdChangeOK" method="post" class="registerform">
+	<form action="feadmin/pwd_change_ok" method="post" class="registerform">
 		<fieldset>
 		<p>
 		  <label><span class="need">* </span>原密码</label>

@@ -2,35 +2,43 @@
 
 class Feadmin extends CI_Controller {
 	
-    function __construct() {
+    function __construct() 
+	{
         parent::__construct();
         $this->load->model('fe_model');
 		$this->load->library('session');
+		date_default_timezone_set('PRC');
     }
 	
 	
-	function index() {	
+	function index() 
+	{	
         $this->load->view('admin/login');
     }
 	
 	
 	//登陆
-	function login(){
+	function login()
+	{
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
 		//echo $this->input->post('username');
 		//echo $this->input->post('password');
 
-		if ($this->form_validation->run()!= false) {
+		if ($this->form_validation->run()!= false)
+		{
 			$_POST['password'] = md5($_POST['password']);
-			$res = $this->fe_model->numFormWhere('admin', $_POST);
+			$res = $this->fe_model->num_form_where('admin', $_POST);
 			//echo $this->input->post('username');
 			//echo $this->input->post('password');
-			if ($res!="") {
+			if ($res!="")
+			{
 				$this->session->set_userdata('username',$this->input->post('username'));
-				redirect('feadmin/postsList');
-			}else{
+				redirect('feadmin/posts_list');
+			}
+			else
+			{
 				$data["error"] = "密码或用户名错误。";
 			}
 		}
@@ -38,7 +46,8 @@ class Feadmin extends CI_Controller {
 	}
 
 	//退出
-	function logout($error = '') {
+	function logout($error = '') 
+	{
 		$this->session->sess_destroy();
 		$data["error"] = $error;
 		$this->load->view('admin/login',$data);
@@ -46,110 +55,127 @@ class Feadmin extends CI_Controller {
 
 	//修改密码
 
-	function pwdChange(){
+	function pwd_change()
+	{
 		$data['title_for_layout'] = '修改密码';
-		$this->layout->view('admin/pwdChange', $data);
+		$this->layout->view('admin/pwd_change', $data);
 	
 	}
-	function pwdChangeOK() { 
+	function pwd_change_ok() 
+	{ 
 		$where['username'] = $this->session->userdata('username');
-		$where['password'] = $_POST['pwd'];
+		$where['password'] = md5($_POST['pwd']);
 
-		$res = $this->fe_model->numFormWhere('admin', $where);
+		$res = $this->fe_model->num_form_where('admin', $where);
 		
-		if ($res!="") {
-			//$row['password'] = $_POST['pwd1'];
+		if ($res!="")
+		{
+			$where_user['username'] = $this->session->userdata('username');
 			$row['password'] = md5($_POST['pwd1']);
-			$res = $this->fe_model->updateForm('admin',$where, $row);
+			$this->fe_model->update_form('admin',$where_user, $row);
 			$this->logout('密码修改成功，请重新登录');
-		}else{
+		}
+		else
+		{
 			$this->success('密码修改失败，你输入的密码不正确', 'no');
 		}
 	}
 	
-    function postsList() {
-		$data['posts'] = $this->fe_model->page('posts', 'feadmin/postsList?',  @$_GET['per_page'], 2, 'id desc','category','posts.category = category.cid ');
+    function posts_list() 
+	{
+		$data['posts'] = $this->fe_model->page('posts', 'feadmin/posts_list?',  @$_GET['per_page'], 10, 'id desc','category','posts.category = category.cid ');
 		//print_r($data['posts']);
-		$data['category'] = $this->fe_model->selectCate();
-		//$data['category1'] = $this->fe_model->selectFormWhere('category',);
+		$data['category'] = $this->fe_model->select_cate();
+		//$data['category1'] = $this->fe_model->select_form_where('category',);
 		//print_r($data['category1']);
         $data['title_for_layout'] = '文章列表';
 		
-        $this->layout->view('admin/postsView', $data);
+        $this->layout->view('admin/posts_list', $data);
     }
 	
 	
-	function postsCreate(){
+	function posts_create()
+	{
 		// echo @$_POST['image'];
 		// if(@$_POST['image'] != ""){	
-			// $_POST['image'] = $this->fileUpdate();
+			// $_POST['image'] = $this->file_update();
 		// }
-		$_POST['image'] = $this->fileUpdate();
+		$_POST['image'] = $this->file_update();
 		$this->form_validation->set_rules('title','标题','required');
 		$this->form_validation->set_rules('category','分类','required');
 		//$this->form_validation->set_rules('content','内容','required');
 		$this->form_validation->set_rules('addtime','时间','required');
 
-		if($this->form_validation->run()==FALSE){
-			
+		if($this->form_validation->run()==FALSE)
+		{
 			//$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
+			$this->load->view('admin/posts_list');
 
-			$this->load->view('admin/postsView');
-
-		}else{
+		}
+		else
+		{
 			//print_r($_POST);
-			$this->fe_model->insertForm('posts', $_POST);
+			$this->fe_model->insert_form('posts', $_POST);
 			$this->success(POSTS.'添加成功', 'yes');
 		
 		}
 	}
 	
 	
-	function posts() {
+	function posts() 
+	{
 		$where['id'] = $this->uri->segment(3,0);
-		$num=$this->fe_model->numFormWhere('posts', $where);
-		if($num == 0){
-			redirect('feadmin/postsList');
+		$num=$this->fe_model->num_form_where('posts', $where);
+		if($num == 0)
+		{
+			redirect('feadmin/posts_list');
 		}
 	
-		$data['postsOne'] = $this->fe_model->selectFormWhere('posts',array('id'=>$this->uri->segment(3)));
-		$data['category'] = $this->fe_model->selectCate();
+		$data['posts_one'] = $this->fe_model->select_form_where('posts',array('id'=>$this->uri->segment(3)));
+		$data['category'] = $this->fe_model->select_cate();
         $data['title_for_layout'] = '修改文章';
 		
         $this->layout->view('admin/posts', $data);
     }
 	
 	
-	function postsUpdate(){
+	function posts_update()
+	{
 
 		$where['id'] = $this->uri->segment(3,0);
-		$num=$this->fe_model->numFormWhere('posts', $where);
-		if($num!=0){
+		$num=$this->fe_model->num_form_where('posts', $where);
+		if($num!=0)
+		{
 
 			$this->form_validation->set_rules('title','标题','required');
 			$this->form_validation->set_rules('category','分类','required');
 			$this->form_validation->set_rules('addtime','时间','required');
 			
-			if($this->form_validation->run()==FALSE){
+			if($this->form_validation->run()==FALSE)
+			{
 
-				// $data['postsOne'] = $this->fe_model->selectFormWhere('posts',array('id'=>$this->uri->segment(3)));
-				// $data['category'] = $this->fe_model->selectCate();
+				// $data['posts_one'] = $this->fe_model->select_form_where('posts',array('id'=>$this->uri->segment(3)));
+				// $data['category'] = $this->fe_model->select_cate();
 				// $data['title_for_layout'] = 'My Posts';
 				$this->load->view('admin/postVews');
 
-			}else{
-				$image = $this->fileUpdate();				
-				$postsOne = $this->fe_model->selectFormWhere('posts',$where);
-				if($image != ""){
-					if($postsOne->image != ""){
-						$file_path = 'uploads/img/'.$postsOne->image;
+			}
+			else
+			{
+				$image = $this->file_update();				
+				$posts_one = $this->fe_model->select_form_where('posts',$where);
+				if($image != "")
+				{
+					if($posts_one->image != "")
+					{
+						$file_path = 'uploads/img/'.$posts_one->image;
 						unlink($file_path);
 					}
 					$_POST['image'] = $image;
 				}
 					
 				//print_r($_POST);
-				$this->fe_model->updateForm('posts', $where, $_POST);
+				$this->fe_model->update_form('posts', $where, $_POST);
 				$this->success(POSTS.'修改成功', 'yes');
 
 			}	
@@ -158,91 +184,108 @@ class Feadmin extends CI_Controller {
 	}
 	
 	
-	function postsDelete(){
+	function posts_delete()
+	{
 		$where['id'] = $this->uri->segment(3,0);
-		$num=$this->fe_model->numFormWhere('posts', $where);
+		$num=$this->fe_model->num_form_where('posts', $where);
 		
-		if($num != 0){
-			$postsOne = $this->fe_model->selectFormWhere('posts',$where);
-			if($postsOne->image != ""){
-				$file_path = 'uploads/img/'.$postsOne->image;
+		if($num != 0)
+		{
+			$posts_one = $this->fe_model->select_form_where('posts',$where);
+			if($posts_one->image != "")
+			{
+				$file_path = 'uploads/img/'.$posts_one->image;
 				unlink($file_path);
 			}
-			$this->fe_model->deleteForm('posts',$where);
+			$this->fe_model->delete_form('posts',$where);
 			
 			$this->success(POSTS.'删除成功','yes');
 		}
 	
 	}
-	function postsDeletes(){
+	function posts_deletes()
+	{
 		
 		print_r($delete = $_POST['checkbox']);
-		if(isset($_POST['checkbox'])){
-			while(list($key,$value)=each($delete)){
+		if(isset($_POST['checkbox']))
+		{
+			while(list($key,$value)=each($delete))
+			{
 				$where['id']=$value;
-				$postsOne = $this->fe_model->selectFormWhere('posts',$where);
-				if($postsOne->image != ""){
-					echo $file_path = 'uploads/img/'.$postsOne->image;
+				$posts_one = $this->fe_model->select_form_where('posts',$where);
+				if($posts_one->image != "")
+				{
+					echo $file_path = 'uploads/img/'.$posts_one->image;
 					unlink($file_path);
 				}
-				$this->fe_model->deleteForm('posts',$where);
+				$this->fe_model->delete_form('posts',$where);
 			}
 			$this->success(POSTS.'删除成功','yes');
 		}
 	
 	}
 	
-	function postsSearch() {
+	function posts_search() 
+	{
 		//echo $where['where']['category'] = $this->uri->segment(3,0);
-		if($_GET['category'] != 0){
+		if($_GET['category'] != 0)
+		{
 			$where['where']['category'] = $_GET['category'];
 		}
 		$where['like']['title'] = @$_GET['title'];
-		$data['posts'] = $this->fe_model->pageWhere('posts', 'feadmin/postsSearch/?category='.$_GET['category'].'&title='.@$_GET['title'], @$_GET['per_page'], 2, $where, 'id desc','category','posts.category = category.cid ');
-		//$data['posts'] = $this->fe_model->pageWhere('posts', 'feadmin/postsSearch/'.$this->uri->segment(3,0), 4, 2, $where, 'id desc','category','posts.category = category.cid ');
+		$data['posts'] = $this->fe_model->page_where('posts', 'feadmin/posts_search/?category='.$_GET['category'].'&title='.@$_GET['title'], @$_GET['per_page'], 2, $where, 'id desc','category','posts.category = category.cid ');
+		//$data['posts'] = $this->fe_model->page_where('posts', 'feadmin/posts_search/'.$this->uri->segment(3,0), 4, 2, $where, 'id desc','category','posts.category = category.cid ');
 		//$data['posts'] = $this->fe_model->pageJoin('posts', 'feadmin/index', 3, 3, 'posts.id desc','','');
 		//print_r($data['posts']);
-		$data['category'] = $this->fe_model->selectCate();
-		$data['categoryOne'] = $this->fe_model->selectFormWhere('category',array('cid'=>$this->uri->segment(3)));
+		$data['category'] = $this->fe_model->select_cate();
+		$data['category_one'] = $this->fe_model->select_form_where('category',array('cid'=>$this->uri->segment(3)));
         $data['title_for_layout'] = 'My Posts';
 		
-        $this->layout->view('admin/postsView', $data);
+        $this->layout->view('admin/posts_list', $data);
     }
 	
 	
-	function categoryList() {
+	function category_list() 
+	{
 		
-        $data['category'] = $this->fe_model->selectCate();
+        $data['category'] = $this->fe_model->select_cate();
 
 		//print_r($data['category']);
         $data['title_for_layout'] = '分类导航';
 		
-        $this->layout->view('admin/categoryList', $data);
+        $this->layout->view('admin/category_list', $data);
     
 	}
 	
-	function categoryCreate(){
+	function category_create()
+	{
 
 		$this->form_validation->set_rules('name','导航名称','required');
 
-		if($this->form_validation->run()==FALSE){
+		if($this->form_validation->run()==FALSE)
+		{
 			//$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
-			$this->load->view('admin/categoryList');
-		}else{
-			if($_POST['cid'] != 0){
+			$this->load->view('admin/category_list');
+		}
+		else
+		{
+			if($_POST['cid'] != 0)
+			{
 				// print_r($_POST);
 				// echo $_POST['id'];
-				$category = $this->fe_model->selectFormWhere('category',array('cid'=>$_POST['cid']));
+				$category = $this->fe_model->select_form_where('category',array('cid'=>$_POST['cid']));
 				$_POST['pid'] = $category->cid;
 				$_POST['path'] = $category->path.'-'.$_POST['cid'];
 				$_POST['cid'] = '';
 				
-			}else{
+			}
+			else
+			{
 				$_POST['pid']  = 0;
 				$_POST['path']  = 0;
 			}
 
-			$this->fe_model->insertForm('category', $_POST);
+			$this->fe_model->insert_form('category', $_POST);
 			$this->success(CATEGORY.'添加成功', 'yes');
 
 		}
@@ -250,54 +293,64 @@ class Feadmin extends CI_Controller {
 
 	}
 	
-	function category(){
+	function category()
+	{
 		$where['cid'] = $this->uri->segment(3,0);
-		$num=$this->fe_model->numFormWhere('category', $where);
-		if($num == 0){
-			redirect('feadmin/categoryList');
+		$num=$this->fe_model->num_form_where('category', $where);
+		if($num == 0)
+		{
+			redirect('feadmin/category_list');
 		}
 		
 		$data['title_for_layout'] = '修改分类导航';
-		$data['category'] = $this->fe_model->selectCate();
-		$data['categoryOne'] = $this->fe_model->selectFormWhere('category',array('cid'=>$this->uri->segment(3)));
+		$data['category'] = $this->fe_model->select_cate();
+		$data['category_one'] = $this->fe_model->select_form_where('category',array('cid'=>$this->uri->segment(3)));
 		
         $this->layout->view('admin/category', $data);
 	
 	}
 	
-	function categoryUpdate(){
+	function category_update()
+	{
 	
 		$where['cid'] = $this->uri->segment(3,0);
-		$num=$this->fe_model->numFormWhere('category', $where);
-		if($num!=0){
+		$num=$this->fe_model->num_form_where('category', $where);
+		if($num!=0)
+		{
 
 			$this->form_validation->set_rules('name','导航名称','required');
 			
-			if($this->form_validation->run()==FALSE){
+			if($this->form_validation->run()==FALSE)
+			{
 
 				// $data['class'] = $this->p_model->p_select_order('plan_class', 'sort desc, cid asc');
-				$data['category'] = $this->fe_model->selectCate();
-				$data['categoryOne'] = $this->fe_model->selectFormWhere('category',array('cid'=>$this->uri->segment(3)));
-				$this->load->view('admin/categoryList');
+				$data['category'] = $this->fe_model->select_cate();
+				$data['category_one'] = $this->fe_model->select_form_where('category',array('cid'=>$this->uri->segment(3)));
+				$this->load->view('admin/category_list');
 
-			}else{
+			}
+			else
+			{
 				
-				if($_POST['cid'] != 0){
+				if($_POST['cid'] != 0)
+				{
 					// print_r($_POST);
 					// echo $_POST['id'];
-					$category = $this->fe_model->selectFormWhere('category',array('cid'=>$_POST['cid']));
+					$category = $this->fe_model->select_form_where('category',array('cid'=>$_POST['cid']));
 					$_POST['pid'] = $category->cid;
 					$_POST['path'] = $category->path.'-'.$_POST['cid'];
 				
-				}else{
+				}
+				else
+				{
 					$_POST['pid']  = 0;
 					$_POST['path']  = 0;
 				}
 					$_POST['cid'] = $this->uri->segment(3,0);
 				//array_splice($_POST, 0, 1);
 				
-				$this->fe_model->updateForm('category', $where, $_POST);
-				//$this->fe_model->insertForm('category', $_POST);
+				$this->fe_model->update_form('category', $where, $_POST);
+				//$this->fe_model->insert_form('category', $_POST);
 				$this->success(CATEGORY.'修改成功', 'yes');
 
 			}	
@@ -305,27 +358,32 @@ class Feadmin extends CI_Controller {
 	
 	}
 	
-	function categoryDelete(){
+	function category_delete()
+	{
 		$where['cid'] = $this->uri->segment(3,0);
 		$row['category'] = $this->uri->segment(3,0);
-		$num=$this->fe_model->numFormWhere('category', $where);
+		$num=$this->fe_model->num_form_where('category', $where);
 		
-		if($num != 0){
+		if($num != 0)
+		{
 		
-			$category = $this->fe_model->selectFormWhere('category',$where);
+			$category = $this->fe_model->select_form_where('category',$where);
 			$path = '-'.$this->uri->segment(3,0);
-			$num1=$this->fe_model->numFormLikeIn('category', 'path', $path,'before');
+			$num1=$this->fe_model->num_form_like_in('category', 'path', $path,'before');
 			
-			if($num1 == 0){
+			if($num1 == 0)
+			{
 			
-				$this->fe_model->deleteForm('category',$where);
+				$this->fe_model->delete_form('category',$where);
 				
 				$post['category'] = 1;
-				$this->fe_model->updateForm('posts', $row, $post);
+				$this->fe_model->update_form('posts', $row, $post);
 				
 				$this->success(CATEGORY.'删除成功','yes');
 			
-			}else{
+			}
+			else
+			{
 			
 				$this->success(CATEGORY.'删除失败,请先删除子栏目导航','no');	
 			
@@ -336,25 +394,27 @@ class Feadmin extends CI_Controller {
 	
 	
 	//网站的配置信息
-	function optionsList(){
-		$data['options'] = $this->fe_model->selectForm('options');
+	function options_list()
+	{
+		$data['options'] = $this->fe_model->select_form('options');
 		
 		//print_r($data['options']);
 		$data['title_for_layout'] = '网站信息';
-		$this->layout->view('admin/optionsList',$data);
+		$this->layout->view('admin/options_list',$data);
 		
 	}
 	
-	function optionsCreate(){
+	function options_create()
+	{
 		$this->form_validation->set_rules('option_name','信息名称','required');
 		
-		$this->fe_model->insertForm('options', $_POST);
+		$this->fe_model->insert_form('options', $_POST);
 		$this->success('信息名称成功', 'yes');
 
 	}
 	
 	
-	// function optionsUpdate(){
+	// function options_update(){
 
 		// $where['id'] = $this->uri->segment(3,0);
 		
@@ -370,10 +430,10 @@ class Feadmin extends CI_Controller {
 
 		// if($this->form_validation->run()==FALSE){
 			////$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
-			// $this->load->view('admin/optionsList/'.$this->uri->segment(3));
+			// $this->load->view('admin/options_list/'.$this->uri->segment(3));
 		// }else{
 		
-			// $this->fe_model->updateForm('options', $where, $_POST);
+			// $this->fe_model->update_form('options', $where, $_POST);
 			// $this->success('资源更新成功', 'yes');
 
 		// }
@@ -381,13 +441,13 @@ class Feadmin extends CI_Controller {
 	
 	
 	
-	// function optionsDelete(){
+	// function options_delete(){
 		// $where['id'] = $this->uri->segment(3,0);
-		// $num=$this->fe_model->numFormWhere('options', $where);
+		// $num=$this->fe_model->num_form_where('options', $where);
 		
 		// if($num != 0){
 		
-			// $this->fe_model->deleteForm('options',$where);
+			// $this->fe_model->delete_form('options',$where);
 			// $this->success('资源删除成功','yes');
 		
 		// }else{
@@ -402,7 +462,8 @@ class Feadmin extends CI_Controller {
 	
 	
 	
-	 function success($title, $status){
+	 function success($title, $status)
+	 {
 
 		$success['title']=$title;
 		$success['status']=$status;
@@ -412,14 +473,16 @@ class Feadmin extends CI_Controller {
 	}
 	
 	//上传图片
-	function fileUpdate(){
+	function file_update()
+	{
 		$config['upload_path'] = './uploads/img/';//绝对路径  
         $config['allowed_types'] = 'gif|jpg|png';//文件支持类型  
         $config['max_size'] = '0';
-        $config['encrypt_name'] = true;//重命名文件  
+        $config['encrypt_name'] = false;//重命名文件  
         $this->load->library('upload',$config);  
   
-        if ($this->upload->do_upload('image')) {  
+        if ($this->upload->do_upload('image'))
+		{  
             $upload_data = $this->upload->data();  
             return $upload_data['file_name'];  
         }  

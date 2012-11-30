@@ -54,7 +54,7 @@
 							<a href="feadmin/category/<?php echo $row->cid;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
 							&nbsp;
 							<?php if($row->cid != 1):?>
-							<a href="feadmin/categoryDelete/<?php echo $row->cid;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
+							<a href="feadmin/category_delete/<?php echo $row->cid;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
 							<!-- <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a> -->
 							<?php endif;?>
 						</td>
@@ -65,7 +65,7 @@
 		</div>
 	<!-- End #tab1 -->
 	<div class="tab-content" id="tab2">
-	  <form action="feadmin/categoryCreate/" method="post" class="registerform">
+	  <form action="feadmin/category_create/" method="post" class="registerform">
 		<fieldset>
 		<p>
 			<label>请选择父级目录</label>

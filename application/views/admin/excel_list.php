@@ -15,7 +15,7 @@
 			<!-- This is the target div. id must match the href of this div's tab -->
 			
 			<div class="bulk-actions search">
-				<form action="feadmin/postsSearch/">
+				<form action="excel/excel_search/">
 					<select name="category">
 						<option value="0">全部分类</option>
 						<?php foreach($category as $row):?>
@@ -38,21 +38,21 @@
 			<!-- <div class="notification attention png_bg"> 
 				<a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
 				<div>
-				<?php if(@$categoryOne):?>
-					<?php echo $categoryOne->name;?> 分类下所有的文章
+				<?php if(@$category_one):?>
+					<?php echo $category_one->name;?> 分类下所有的文章
 				<?php else:?>
 					全部分类文章
 				<?php endif;?> 
 				</div>
 			</div> -->
-			<form method="post" action="feadmin/postsDeletes">
+			<form method="post" action="excel/excel_deletes">
 				<table>
 					<thead>
 						<tr>
 							<th>
 							  <input class="check-all" type="checkbox" />
 							</th>
-							<th>文章标题</th>
+							<th>文档标题</th>
 							<th>分类</th>
 							<th>发布时间</th>
 							<th>操  作</th>
@@ -77,20 +77,20 @@
 						</tr>
 					</tfoot>
 					<tbody>
-						<?php foreach ($posts['admin'] as $post):
+						<?php foreach ($excel['admin'] as $post):
 							?>
 						<tr>
 							<td>
 							  <input type="checkbox" name="checkbox[]" value="<?php echo $post->id; ?>" />
 							</td>
-							<td><a href="feadmin/posts/<?php echo $post->id;?>" title="修改文章"><?php echo $post->title;?></a></td>
-							<td><a href="feadmin/postsSearch/?category=<?php echo $post->category;?>" title="查询“<?php echo $post->name;?>”分类"><?php echo $post->name;?></a></td>
+							<td><a href="excel/excel/<?php echo $post->id;?>" title="修改文章"><?php echo $post->title;?></a></td>
+							<td><a href="excel/excel_search/?category=<?php echo $post->category;?>" title="查询“<?php echo $post->name;?>”分类"><?php echo $post->name;?></a></td>
 							<!-- <td><?php //echo date('Y-m-d', strtotime($post->addtime));?></td> -->
 							<td><?php echo $post->addtime;?></td>
 							<td>
-								<a href="feadmin/posts/<?php echo $post->id;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
+								<a href="excel/excel/<?php echo $post->id;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
 								<?php if($post->type != 1){?>
-									<a href="feadmin/postsDelete/<?php echo $post->id;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
+									<a href="excel/excel_delete/<?php echo $post->id;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
 									<!-- <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a> -->
 								<?php }?>
 							</td>
@@ -103,11 +103,11 @@
 		</div>
 	<!-- End #tab1 -->
 	<div class="tab-content" id="tab2">
-	  <form action="feadmin/postsCreate" method="post" class="registerform" onSubmit="return chkinput(this)" enctype="multipart/form-data">
+	  <form action="excel/excel_create" method="post" class="registerform" onSubmit="return chkinput(this)" enctype="multipart/form-data">
 		<fieldset>
 		<!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
 		<p>
-			<label><span class="need">* </span>标题</label>
+			<label><span class="need">* </span>文档标题</label>
 				<input class="text-input small-input" type="text" id="small-input" name="title" datatype="*4-18" errormsg="昵称至少4个字符,最多18个字符！" />
 				<span class="Validform_checktip"></span>
 			<!-- Classes for input-notification: success, error, information, attention -->
@@ -118,8 +118,8 @@
 			<select name="category" class="small-input">
 				<?php foreach($category as $row):?>
 				<?php 
-					$is_Onepage = $this->fe_model->numFormWhere('posts',array('category'=>$row->cid));
-					if($row->type == 1 && $is_Onepage ==1){}
+					echo $is_onepage = $this->fe_model->num_form_where('excel',array('category'=>$row->cid));
+					if($row->type == 1 && $is_onepage ==1){}
 					else{
 				?>
 				<option value="<?php echo $row->cid;?>">
@@ -135,29 +135,9 @@
 			</select>
 		</p>
 		<p>
-			<label>标题图(177*120)</label>
-			<input type="file" class="text-input small-input" id="small-input" name="image"/>
-		</p>
-		  <!-- <label>复选框</label>
-		  <input type="checkbox" name="checkbox1" />
-		  这是一个复选框
-		  <input type="checkbox" name="checkbox2" />
-		  		 这是另外一个复选框 </p>
-		  		<p>
-		  <label>单选按钮</label>
-		  <input type="radio" name="radio1" />
-		  这是一个单选按钮<br />
-		  <input type="radio" name="radio2" />
-		  这是另外一个单选按钮 </p> -->
-		<p>
-			<label><span class="need">* </span>文本编辑器</label>
-			<textarea id="editor_id" name="content" style="width:90%;height:450px;"></textarea>
-			<!-- <script type="text/plain" id="myEditor" ></script>
-			<script type="text/javascript">
-				var editor = new baidu.editor.ui.Editor();
-				editor.render("myEditor");
-			</script> -->
-		 
+			<label><span class="need">* </span>上传Excel文档(注:excel的格式只能是xls)</label>
+			<input type="file" class="text-input small-input" id="small-input" name="excel" datatype="*"/>
+			<span class="Validform_checktip"></span>
 		</p>
 		<p>
 			<label for=""><span class="need">* </span>时间</label>
@@ -189,15 +169,3 @@
   </div>
   <!-- End .content-box-content -->
 </div>
-<script language="javascript">
-function chkinput(form)
-{
-	var content=editor.hasContents()
-		if(!content)
-	{
-		alert("请输入内容！");
-		return(false);
-	}
-		return(true);
-}
-</script>
