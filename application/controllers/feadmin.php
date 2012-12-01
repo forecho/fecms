@@ -106,11 +106,11 @@ class Feadmin extends CI_Controller {
 		//$this->form_validation->set_rules('content','内容','required');
 		$this->form_validation->set_rules('addtime','时间','required');
 
-		if($this->form_validation->run()==FALSE)
+		if($this->form_validation->run() == FALSE OR $_POST['image'] == '')
 		{
 			//$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
-			$this->load->view('admin/posts_list');
-
+			echo $this->upload->display_errors(); 
+			//$this->success('文章添加失败', 'no');
 		}
 		else
 		{
@@ -153,12 +153,7 @@ class Feadmin extends CI_Controller {
 			
 			if($this->form_validation->run()==FALSE)
 			{
-
-				// $data['posts_one'] = $this->fe_model->select_form_where('posts',array('id'=>$this->uri->segment(3)));
-				// $data['category'] = $this->fe_model->select_cate();
-				// $data['title_for_layout'] = 'My Posts';
-				$this->load->view('admin/postVews');
-
+				$this->posts();
 			}
 			else
 			{
@@ -215,7 +210,7 @@ class Feadmin extends CI_Controller {
 				$posts_one = $this->fe_model->select_form_where('posts',$where);
 				if($posts_one->image != "")
 				{
-					echo $file_path = 'uploads/img/'.$posts_one->image;
+					$file_path = 'uploads/img/'.$posts_one->image;
 					unlink($file_path);
 				}
 				$this->fe_model->delete_form('posts',$where);
@@ -476,7 +471,7 @@ class Feadmin extends CI_Controller {
 	function file_update()
 	{
 		$config['upload_path'] = './uploads/img/';//绝对路径  
-        $config['allowed_types'] = 'gif|jpg|png';//文件支持类型  
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';//文件支持类型  
         $config['max_size'] = '0';
         $config['encrypt_name'] = false;//重命名文件  
         $this->load->library('upload',$config);  
@@ -486,10 +481,10 @@ class Feadmin extends CI_Controller {
             $upload_data = $this->upload->data();  
             return $upload_data['file_name'];  
         }  
-        // else {
-            // $this->upload->display_errors();  
-            // $this->success('上传图片失败,请重新上传','no');	
-        // }  
+        else
+        {
+            return $upload_data['file_name'] = '';
+        }
 	}
 	
 	

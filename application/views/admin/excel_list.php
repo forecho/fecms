@@ -34,17 +34,6 @@
 					<input type="submit" value="搜索"  class="button"/>
 				</form>
 			</div>
-			
-			<!-- <div class="notification attention png_bg"> 
-				<a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-				<?php if(@$category_one):?>
-					<?php echo $category_one->name;?> 分类下所有的文章
-				<?php else:?>
-					全部分类文章
-				<?php endif;?> 
-				</div>
-			</div> -->
 			<form method="post" action="excel/excel_deletes">
 				<table>
 					<thead>
@@ -88,7 +77,7 @@
 							<!-- <td><?php //echo date('Y-m-d', strtotime($post->addtime));?></td> -->
 							<td><?php echo $post->addtime;?></td>
 							<td>
-								<a href="excel/excel/<?php echo $post->id;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
+								<a href="excel/excel_edit/<?php echo $post->id;?>" title="修改"><img src="resources/images/icons/pencil.png" alt="修改" /></a> 
 								<?php if($post->type != 1){?>
 									<a href="excel/excel_delete/<?php echo $post->id;?>" title="删除" onclick="return(confirm('确定删除?'))"><img src="resources/images/icons/cross.png" alt="删除" /></a> 
 									<!-- <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a> -->

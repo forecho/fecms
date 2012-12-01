@@ -1,10 +1,11 @@
+<h2><?php echo $title_for_layout;?></h2>
 <div class="tab-content" id="tab2">
   <form action="feadmin/posts_update/<?php echo $posts_one->id;?>" method="post" class="registerform" onSubmit="return chkinput(this)" enctype="multipart/form-data">
 	<fieldset>
 	<!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
 	<p>
 		<label><span class="need">* </span>标题</label>
-			<input class="text-input small-input" type="text" id="small-input" name="title" datatype="*4-18" errormsg="昵称至少4个字符,最多18个字符！" value="<?php echo $posts_one->title;?>" />
+			<input class="text-input medium-input" type="text" id="medium-input" name="title" datatype="*4-28" errormsg="昵称至少4个字符,最多28个字符！" value="<?php echo $posts_one->title;?>" />
 			<span class="Validform_checktip"></span>
 		<!-- Classes for input-notification: success, error, information, attention -->
 	  <br />
@@ -34,7 +35,7 @@
 	</p>
 	<p>
 		<label><span class="need">* </span>文本编辑器</label>
-		<textarea id="editor_id" name="content" style="width:90%;height:450px;"><?php echo $posts_one->content;?></textarea>
+		<textarea id="editor_id" name="content" style="width:70%;height:450px;"><?php echo $posts_one->content;?></textarea>
 	</p>
 	<p>
 		<label for=""><span class="need">* </span>时间</label>

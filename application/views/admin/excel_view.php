@@ -1,4 +1,4 @@
-<h2>读取 excel 内容</h2>
+<h2><?php echo $title_for_layout;?> 内容</h2>
 <table cellpadding="0" cellspacing="0">
 	<?php foreach($excel_datas as $row): ?>
     <tr>

@@ -91,9 +91,9 @@ $(function(){
             <li><a href="feadmin/options_list">配置信息管理</a></li>
           </ul>
         </li>
-		<li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'excel_list'|| $this->uri->segment(2) == 'excel_search' || $this->uri->segment(2) == 'excel'){echo 'current';}?>">读取Excel表格</a>
+		<li> <a href="#" class="nav-top-item <?php if($this->uri->segment(2) == 'excel_list'|| $this->uri->segment(2) == 'excel_search' || $this->uri->segment(2) == 'excel_edit' || $this->uri->segment(2) == 'excel_view') {echo 'current';}?>">读取Excel表格</a>
           <ul>
-            <li><a <?php if($this->uri->segment(2) == 'excel_list'|| $this->uri->segment(2) == 'excel_search' || $this->uri->segment(2) == 'excel'){echo 'class="current"';}?> href="excel/excel_list">Excel内容</a></li>
+            <li><a <?php if($this->uri->segment(2) == 'excel_list'|| $this->uri->segment(2) == 'excel_search' || $this->uri->segment(2) == 'excel_edit' || $this->uri->segment(2) == 'excel_view'){echo 'class="current"';}?> href="excel/excel_list">Excel内容</a></li>
           </ul>
         </li>
         <li> <a href="#" class="nav-top-item">图片管理</a>
