@@ -808,3 +808,9 @@ div.wysiwyg iframe { border: 0; margin: 5px 0 0 0; clear: left; width: 97.5% !im
 	padding: 3px;
 	border: 1px solid #CCC;
 }
+.excel{
+	font-size:12px;
+}
+#main-content .excel thead th{
+	font-size:12px;
+}

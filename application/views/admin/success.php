@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="refresh" content="2; url=<?php echo $_SERVER['HTTP_REFERER']?>" />
+<meta http-equiv="refresh" content="2; url=<?php if($url !== ''){echo base_url($url);}else{echo $_SERVER['HTTP_REFERER'];}?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>提示页面</title>
 <style type="text/css">
@@ -13,7 +13,6 @@
 	a:active{}
 </style>
 </head>
-
 <body style="background:url(../images/bg.png);">
 <div style="width:600px; height:70px; margin:auto; margin-top:10%; padding:100px 
 20px;">
@@ -27,7 +26,7 @@
 			<div style="font-size:14px;line-height:25px;">
 				<?php echo @$title; ?>
 			</div><br />
-			<div style="float:left;">2秒后浏览器将会自动跳转到产品页面，没有反应点<a href="<?php echo $_SERVER['HTTP_REFERER']?>">这里</a></div>
+			<div style="float:left;">2秒后浏览器将会自动跳转到产品页面，没有反应点<a href="<?php if($url !== ''){echo base_url($url);}else{echo $_SERVER['HTTP_REFERER'];}?>">这里</a></div>
 		</div>
 	</div>
 </div>

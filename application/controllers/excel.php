@@ -13,8 +13,9 @@ class Excel extends CI_Controller
 	
 	function excel_list()
 	{
-		$data['excel'] = $this->fe_model->page('excel', 'excel/excel_list?',  @$_GET['per_page'], 2, 'id desc','category','excel.category = category.cid ');
+		$data['excel'] = $this->fe_model->page('excel', 'excel/excel_list?',  @$_GET['per_page'], 20, 'addtime desc','category','excel.category = category.cid ','excel.*,category.name as cname');
 		$data['category'] = $this->fe_model->select_cate();
+		
 		
         $data['title_for_layout'] = 'Excel列表';
 		//print_r($data['excel']);
@@ -25,27 +26,47 @@ class Excel extends CI_Controller
 	function excel_create()
 	{
 		$_POST['excel'] = $this->file_update();
-		$this->form_validation->set_rules('title','标题','required');
 		$this->form_validation->set_rules('category','分类','required');
 		$this->form_validation->set_rules('addtime','时间','required');
-
-		if($this->form_validation->run() == FALSE OR $_POST['excel'] == '')
-		{
-			
-			//$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
-			echo $this->upload->display_errors(); 
-			$this->success('Excel文档添加失败', 'no');
-
-		}
-		else
-		{
-			//print_r($_POST);
-			$this->fe_model->insert_form('excel', $_POST);
-			$this->success('Excel文档添加成功', 'yes');
 		
+		$this->load->helper('my_excel');
+        $excel = excel();
+		$excel->read('uploads/excel/'.$_POST['excel']);
+		
+		for ($i = 3; $i <= $excel->sheets[0]['numRows']; $i++) {
+			$excel_datas[] = $excel->sheets[0]['cells'][$i];
 		}
+		
+		$where['cid'] = $_POST['category'];
+		$category = $this->fe_model->select_form_where('category',$where);
+		$data['category_name'] = $category->name;
+		
+		$data['excel_post'] = $_POST;
+		$data['excel_rows'] = $excel->sheets[0]['numRows'];
+		$data['excel_datas'] = $excel_datas;
+		$data['excel_path'] = 'uploads/excel/'.$_POST['excel'];
+		$data['title_for_layout'] = 'Excel表格数据';
+		$this->layout->view('admin/excel_update', $data);
+
 	}
 
+	function excel_create_ok()
+	{
+		
+		$this->load->helper('my_excel');
+        $excel = excel();
+		$excel->read($_POST['excel_path']);
+		
+		for ($i = 4; $i <= $excel->sheets[0]['numRows']; $i++) {
+			$form_data = array('name', 'material', 'thickness','width','length','stock','weight','price','place','location','remark','category','addtime');
+			$excel_data = $excel->sheets[0]['cells'][$i];
+			array_push($excel_data,$_POST['category'],$_POST['addtime']);
+			$data = array_combine($form_data, $excel_data);
+			$this->fe_model->insert_form('excel', $data);
+		}
+		$this->success('Excel文档添加成功', 'yes','excel/excel_list');
+	}
+	
 	
 	function excel_edit()
 	{
@@ -90,7 +111,6 @@ class Excel extends CI_Controller
 		if($num!=0)
 		{
 
-			$this->form_validation->set_rules('title','文档标题','required');
 			$this->form_validation->set_rules('category','分类','required');
 			$this->form_validation->set_rules('addtime','时间','required');
 			
@@ -100,18 +120,6 @@ class Excel extends CI_Controller
 			}
 			else
 			{
-				$file = $this->file_update();				
-				$excel_one = $this->fe_model->select_form_where('excel',$where);
-				if($file != "")
-				{
-					if($excel_one->excel != "")
-					{
-						$file_path = 'uploads/excel/'.$excel_one->excel;
-						unlink($file_path);
-					}
-					$_POST['excel'] = $file;
-				}
-					
 				//print_r($_POST);
 				$this->fe_model->update_form('excel', $where, $_POST);
 				$this->success('Excel修改成功', 'yes');
@@ -128,12 +136,12 @@ class Excel extends CI_Controller
 		{
 			$where['where']['category'] = $_GET['category'];
 		}
-		$where['like']['title'] = @$_GET['title'];
-		$data['excel'] = $this->fe_model->page_where('excel', 'excel/excel_search/?category='.$_GET['category'].'&title='.@$_GET['title'], @$_GET['per_page'], 2, $where, 'id desc','category','excel.category = category.cid ');
-
+		$where['like']['fe_excel.name'] = @$_GET['name'];
+		$data['excel'] = $this->fe_model->page_where('excel', 'excel/excel_search/?category='.$_GET['category'].'&name='.@$_GET['name'], @$_GET['per_page'], 20, $where, 'id desc','category','excel.category = category.cid','excel.*,category.name as cname');
+		
 		$data['category'] = $this->fe_model->select_cate();
 		$data['category_one'] = $this->fe_model->select_form_where('category',array('cid'=>$this->uri->segment(3)));
-        $data['title_for_layout'] = '查询'.@$_GET['title'].'的结果';
+        $data['title_for_layout'] = '查询'.@$_GET['name'].'的结果';
 		
         $this->layout->view('admin/excel_list', $data);
     }
@@ -145,12 +153,6 @@ class Excel extends CI_Controller
 		
 		if($num != 0)
 		{
-			$excel_one = $this->fe_model->select_form_where('excel',$where);
-			if($excel_one->excel != "")
-			{
-				$file_path = 'uploads/excel/'.$excel_one->excel;
-				unlink($file_path);
-			}
 			$this->fe_model->delete_form('excel',$where);
 			
 			$this->success('Excel删除成功','yes');
@@ -162,40 +164,41 @@ class Excel extends CI_Controller
 	function excel_deletes()
 	{
 		
-		print_r($delete = $_POST['checkbox']);
-		if(isset($_POST['checkbox']))
+		//print_r($delete = $_POST['checkbox']);
+		$delete = $_POST['checkbox'];
+		switch ($_POST['act'])
 		{
-			while(list($key,$value)=each($delete))
-			{
-				$where['id']=$value;
-				$excel_one = $this->fe_model->select_form_where('excel',$where);
-				if($excel_one->excel != "")
+			case '删除选中':
+				while(list($key,$value)=each($delete))
 				{
-					$file_path = 'uploads/excel/'.$excel_one->excel;
-					unlink($file_path);
+					$where['id']=$value;
+					$this->fe_model->delete_form('excel',$where);
 				}
-				$this->fe_model->delete_form('excel',$where);
-			}
-			$this->success('Excel删除成功','yes');
+				$success = 'Excel删除成功';
+			break;
+			case '更新时间':
+				while(list($key,$value)=each($delete))
+				{
+					$data['addtime'] = date('Y-m-d H:i:s');
+					$where['id']=$value;
+					$this->fe_model->update_form('excel', $where, $data);
+				}
+				$success = 'Excel时间更新成功';
+			break;
 		}
+		$this->success($success,'yes');
 	
 	}
 
 
-
-
-
-
-
 	
-	function success($title, $status)
+	function success($title, $status,$url='')
 	{
-
 		$success['title']=$title;
 		$success['status']=$status;
+		$success['url']=$url;
 		
 		$this->load->view('admin/success',$success);			
-
 	}
 	
 	//上传图片

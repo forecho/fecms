@@ -161,7 +161,7 @@
 		</p>
 		<p>
 			<label for=""><span class="need">* </span>时间</label>
-				<input type="text" name="addtime" value="<?php echo date("Y-m-d H:i:s");?>" id="d11" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class= "text-input small-input" autocomplete="off" datatype="*" />
+				<input type="text" name="addtime" value="<?php echo date("Y-m-d H:i:s");?>" id="d11" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class= "text-input small-input" autocomplete="off" datatype="*" />
 			<span class="Validform_checktip"></span>
 		</p>
 		<p>

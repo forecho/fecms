@@ -455,16 +455,13 @@ class Feadmin extends CI_Controller {
 	
 	
 	
-	
-	
-	 function success($title, $status)
-	 {
-
+	function success($title, $status,$url='')
+	{
 		$success['title']=$title;
 		$success['status']=$status;
+		$success['url']=$url;
 		
 		$this->load->view('admin/success',$success);			
-
 	}
 	
 	//上传图片

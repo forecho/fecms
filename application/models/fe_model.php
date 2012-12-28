@@ -86,7 +86,7 @@ class Fe_model extends CI_Model{
 	
 	
 	//分页
-	function page($form, $url, $offset, $size, $order, $join, $join_array){
+	function page($form, $url, $offset, $size, $order, $join, $join_array,$select = ''){
 
 		$fy['url'] = $url;
 		$fy['total'] = $data['total'] = $this->fy_n($form);
@@ -98,7 +98,7 @@ class Fe_model extends CI_Model{
 		//$info['start'] = $data['start'] = $this->uri->segment($offset, 0);
 		$info['start'] = $data['start'] = $offset;
 		$info['order'] = $order;
-		$data['admin'] = $this->fy_info($form, $info, $join, $join_array);
+		$data['admin'] = $this->fy_info($form, $info, $join, $join_array,$select);
 		
 		return $data;
 
@@ -110,18 +110,21 @@ class Fe_model extends CI_Model{
 
 	}
 	
-	function fy_info($form,$value,$join,$join_array){
+	function fy_info($form,$value,$join,$join_array,$select){
 		
 		$this->db->order_by($value['order']);
 		$this->db->limit($value['size'],$value['start']);
 		if($join != ""){
 			$this->db->join($join,$join_array);
 		}
+		if($select !== ''){
+		   $this->db->select($select);
+		}
 		return $this->db->get($form)->result();
 
 	}
 	
-	function page_where($form, $url, $offset, $size, $where, $order, $join, $join_array){
+	function page_where($form, $url, $offset, $size, $where, $order, $join, $join_array,$select = ""){
 
 			$fy['url'] = $url;
 			$fy['total'] = $data['total'] = $this->p_num_where($form, $where);
@@ -133,7 +136,7 @@ class Fe_model extends CI_Model{
 			//$info['start'] = $data['start'] = $this->uri->segment(offset, 0);
 			$info['start'] = $data['start'] = $data['start'] = $offset;
 			$info['order'] = $order;
-			$data['admin'] = $this->fy_info_where($form, $where, $info, $join, $join_array);
+			$data['admin'] = $this->fy_info_where($form, $where, $info, $join, $join_array,$select);
 
 			return $data;
 
@@ -151,7 +154,7 @@ class Fe_model extends CI_Model{
 
 	}
 	
-	function fy_info_where($form, $where, $value, $join, $join_array){
+	function fy_info_where($form, $where, $value, $join, $join_array,$select){
 
 		if(isset($where['where'])){
 			$this->db->where($where['where']);
@@ -159,7 +162,10 @@ class Fe_model extends CI_Model{
 		if(isset($where['like'])){
 			$this->db->like($where['like']);
 		}
-
+		if($select !== ''){
+		   $this->db->select($select);
+		}
+		
 		$this->db->order_by($value['order']);
 		$this->db->limit($value['size'],$value['start']);
 		if($join != ""){
