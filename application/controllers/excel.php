@@ -22,6 +22,38 @@ class Excel extends CI_Controller
        $this->layout->view('admin/excel_list', $data);
 	}
 
+	function excel_create_one()
+	{
+		$data['category'] = $this->fe_model->select_cate();
+		$data['title_for_layout'] = '添加Excel数据';
+		$this->layout->view('admin/excel_create_one', $data);
+	}
+	
+	function excel_create_one_ok()
+	{
+		$this->form_validation->set_rules('name','名称','required');
+		$this->form_validation->set_rules('material','材质','required');
+		$this->form_validation->set_rules('thickness','厚度','required');
+		$this->form_validation->set_rules('width','宽度','required');
+		$this->form_validation->set_rules('length','长度','required');
+		$this->form_validation->set_rules('stock','库存','required');
+		$this->form_validation->set_rules('weight','重量','required');
+		$this->form_validation->set_rules('price','单价','required');
+		$this->form_validation->set_rules('place','产地','required');
+		$this->form_validation->set_rules('location','存放地','required');
+
+		if($this->form_validation->run() == FALSE)
+		{
+			//$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
+			echo $this->upload->display_errors(); 
+			//$this->success('文章添加失败', 'no');
+		}
+		else
+		{
+			$this->fe_model->insert_form('excel', $_POST);
+			$this->success('数据添加成功', 'yes');
+		}
+	}
 	
 	function excel_create()
 	{

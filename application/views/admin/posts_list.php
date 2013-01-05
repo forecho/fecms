@@ -98,8 +98,8 @@
 					  <?php 
 					  endforeach;?>
 					</tbody>
-			  </table>
-		  </form>
+				</table>
+			</form>
 		</div>
 	<!-- End #tab1 -->
 	<div class="tab-content" id="tab2">

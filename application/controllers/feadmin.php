@@ -408,50 +408,53 @@ class Feadmin extends CI_Controller {
 
 	}
 	
-	
-	// function options_update(){
+	function option_name(){
+		$where['option_name'] = $_POST["param"];
+		$num=$this->fe_model->num_form_where('options', $where);
 
-		// $where['id'] = $this->uri->segment(3,0);
-		
-		// $this->form_validation->set_rules('name','名称','required');
-		// $this->form_validation->set_rules('material','导材质','required');
-		// $this->form_validation->set_rules('specification','规格','required');
-		// $this->form_validation->set_rules('weight','重量','required');
-		// $this->form_validation->set_rules('place','导产地','required');
-		// $this->form_validation->set_rules('unit','单位','required');
-		// $this->form_validation->set_rules('location','存放地','required');
-		
-		// $this->form_validation->set_rules('species','种类','required');
+		if($num == 0){
+			echo "y" ;//验证通过输出小写字母"y"，出错则输出相应错误信息;
+		}else {
+			echo "此变量名已经被使用" ;//验证通过输出小写字母"y"，出错则输出相应错误信息;
+		}	
+	
+	}
+	
+	function options_update(){
 
-		// if($this->form_validation->run()==FALSE){
-			////$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
-			// $this->load->view('admin/options_list/'.$this->uri->segment(3));
-		// }else{
+		if(isset($_POST)){
+			foreach($_POST as $value =>$key){
+				$where['option_name'] =  $value;
+				$post['option_value'] = $key;
+				$this->fe_model->update_form('options', $where, $post);
+			}
+			$this->success('网站配置信息更新成功', 'yes');
+		}
+		else
+		{
+			$this->success('网站配置信息更新成功失败,请检查之后重新操作','no');	
+		}
 		
-			// $this->fe_model->update_form('options', $where, $_POST);
-			// $this->success('资源更新成功', 'yes');
-
-		// }
-	// }
+	}
 	
 	
 	
-	// function options_delete(){
-		// $where['id'] = $this->uri->segment(3,0);
-		// $num=$this->fe_model->num_form_where('options', $where);
+	function options_delete(){
+		$where['id'] = $this->uri->segment(3,0);
+		$num=$this->fe_model->num_form_where('options', $where);
 		
-		// if($num != 0){
+		if($num != 0){
 		
-			// $this->fe_model->delete_form('options',$where);
-			// $this->success('资源删除成功','yes');
+			$this->fe_model->delete_form('options',$where);
+			$this->success('配置信息删除成功','yes');
 		
-		// }else{
+		}else{
 		
-			// $this->success('资源删除失败,请检查之后重新操作','no');	
+			$this->success('配置信息删除失败,请检查之后重新操作','no');	
 		
-		// }
+		}
 	
-	// }
+	}
 	
 	
 	
