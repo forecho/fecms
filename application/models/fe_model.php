@@ -82,6 +82,9 @@ class Fe_model extends CI_Model{
 
 	}
 	
+	function select_posts_date(){
+		return $this->db->query("select left(addtime,7) as timeget from fe_posts group by timeget")->result();
+	}
 	
 	
 	

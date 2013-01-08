@@ -30,6 +30,12 @@
 						</option>
 						<?php endforeach;?>
 					</select>
+					<select name="addtime">
+						<option value="0">显示所有日期</option>
+						<?php foreach ($timeget as $row):?>
+							<option value="<?php echo $row->timeget;?>" <?php if(@$_GET['addtime'] == $row->timeget){echo 'selected="selected"';}?>><?php echo date('Y-m',strtotime($row->timeget));?></option>
+						<?php endforeach;?>
+					</select>
 					<input type="text" name="title" value="<?php echo @$_GET['title'];?>" />
 					<input type="submit" value="搜索"  class="button"/>
 				</form>
@@ -77,8 +83,7 @@
 						</tr>
 					</tfoot>
 					<tbody>
-						<?php foreach ($posts['admin'] as $post):
-							?>
+						<?php foreach ($posts['admin'] as $post):?>
 						<tr>
 							<td>
 							  <input type="checkbox" name="checkbox[]" value="<?php echo $post->id; ?>" />
@@ -95,8 +100,7 @@
 								<?php }?>
 							</td>
 						</tr>
-					  <?php 
-					  endforeach;?>
+					  <?php endforeach;?>
 					</tbody>
 				</table>
 			</form>

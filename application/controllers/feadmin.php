@@ -86,6 +86,7 @@ class Feadmin extends CI_Controller {
 		$data['posts'] = $this->fe_model->page('posts', 'feadmin/posts_list?',  @$_GET['per_page'], 10, 'id desc','category','posts.category = category.cid ');
 		//print_r($data['posts']);
 		$data['category'] = $this->fe_model->select_cate();
+		$data['timeget'] = $this->fe_model->select_posts_date();
 		//$data['category1'] = $this->fe_model->select_form_where('category',);
 		//print_r($data['category1']);
         $data['title_for_layout'] = '文章列表';
@@ -96,17 +97,17 @@ class Feadmin extends CI_Controller {
 	
 	function posts_create()
 	{
-		// echo @$_POST['image'];
-		// if(@$_POST['image'] != ""){	
-			// $_POST['image'] = $this->file_update();
-		// }
-		$_POST['image'] = $this->file_update();
+		//echo @$_POST['image'];
+		if(@$_POST['image'] != ""){	
+			$_POST['image'] = $this->file_update();
+		 }
+		//$_POST['image'] = $this->file_update();
 		$this->form_validation->set_rules('title','标题','required');
 		$this->form_validation->set_rules('category','分类','required');
 		//$this->form_validation->set_rules('content','内容','required');
 		$this->form_validation->set_rules('addtime','时间','required');
 
-		if($this->form_validation->run() == FALSE OR $_POST['image'] == '')
+		if($this->form_validation->run() == FALSE)
 		{
 			//$data['class'] = $this->fe_model->p_select_order('plan_class', 'sort desc, cid asc');
 			echo $this->upload->display_errors(); 
@@ -201,7 +202,7 @@ class Feadmin extends CI_Controller {
 	function posts_deletes()
 	{
 		
-		print_r($delete = $_POST['checkbox']);
+		//print_r($delete = $_POST['checkbox']);
 		if(isset($_POST['checkbox']))
 		{
 			while(list($key,$value)=each($delete))
@@ -228,11 +229,16 @@ class Feadmin extends CI_Controller {
 			$where['where']['category'] = $_GET['category'];
 		}
 		$where['like']['title'] = @$_GET['title'];
-		$data['posts'] = $this->fe_model->page_where('posts', 'feadmin/posts_search/?category='.$_GET['category'].'&title='.@$_GET['title'], @$_GET['per_page'], 2, $where, 'id desc','category','posts.category = category.cid ');
+		if($_GET['addtime'] != 0)
+		{
+			$where['like']['addtime'] = @$_GET['addtime'];
+		}
+		$data['posts'] = $this->fe_model->page_where('posts', 'feadmin/posts_search/?category='.$_GET['category'].'&title='.@$_GET['title'].'&addtime='.@$_GET['addtime'], @$_GET['per_page'], 10, $where, 'id desc','category','posts.category = category.cid ');
 		//$data['posts'] = $this->fe_model->page_where('posts', 'feadmin/posts_search/'.$this->uri->segment(3,0), 4, 2, $where, 'id desc','category','posts.category = category.cid ');
 		//$data['posts'] = $this->fe_model->pageJoin('posts', 'feadmin/index', 3, 3, 'posts.id desc','','');
 		//print_r($data['posts']);
 		$data['category'] = $this->fe_model->select_cate();
+		$data['timeget'] = $this->fe_model->select_posts_date();
 		$data['category_one'] = $this->fe_model->select_form_where('category',array('cid'=>$this->uri->segment(3)));
         $data['title_for_layout'] = 'My Posts';
 		
@@ -473,7 +479,7 @@ class Feadmin extends CI_Controller {
 		$config['upload_path'] = './uploads/img/';//绝对路径  
         $config['allowed_types'] = 'gif|jpg|png|jpeg';//文件支持类型  
         $config['max_size'] = '0';
-        $config['encrypt_name'] = false;//重命名文件  
+        $config['encrypt_name'] = true;//重命名文件  false/true
         $this->load->library('upload',$config);  
   
         if ($this->upload->do_upload('image'))
